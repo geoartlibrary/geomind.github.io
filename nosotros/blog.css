@@ -1,0 +1,211 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+   padding-top: 70px;    /* espacio igual a la altura del header */
+}
+
+/* Navbar */
+.navbar {
+ position: fixed;      /* fija la barra */
+  top: 0;               /* siempre arriba */
+  left: 0;
+  width: 100%;          /* ocupa todo el ancho */
+  display: flex;
+  align-items: center;
+  background: #ffffff;  /* fondo blanco */
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+  z-index: 1000;        /* asegura que quede encima del contenido */
+}
+
+.logo img {
+  height: 50px;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin-left: auto;   /* empuja el menú hacia la derecha */
+}
+
+.menu li a {
+  color: #b4afaf;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.menu li a:hover {
+  color: #ffcc00;
+}
+/* Botón hamburguesa oculto en escritorio */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Responsive: en pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu {
+    display: none;              /* ocultar menú por defecto */
+    flex-direction: column;     /* menú vertical */
+    background: #ffffff;
+    position: absolute;
+    top: 60px;                  /* debajo del header */
+    right: 0;
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .menu li {
+    margin: 10px 0;
+  }
+
+  .menu-toggle {
+    display: block;
+    font-size: 28px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .menu.active {
+    display: flex;              /* mostrar menú al activar */
+  }
+}
+
+/* Blog */
+.mv-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  .mv-block {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr; /* imagen ligeramente más amplia */
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  /* En visión invertimos columnas para desktop */
+  .mv-vision {
+    grid-template-columns: 1fr 1.1fr;
+  }
+
+  .mv-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;        /* Mantiene proporción agradable */
+    object-fit: cover;          /* Recorta sin deformar */
+    border-radius: 12px;        /* Esquinas suaves */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .mv-content h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .mv-content p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #333;
+    text-align: justify;
+  }
+
+  /* Responsivo: en pantallas pequeñas apilar en una columna */
+  @media (max-width: 768px) {
+    .mv-block {
+      grid-template-columns: 1fr;
+    }
+    .mv-vision .mv-image {
+      order: 2; /* asegura que el texto va primero en móvil */
+    }
+  }
+/* Footer */
+.footer {
+  background: #003366;
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+
+/* Botón flotante de WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 2px 2px 5px #999;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.whatsapp-float img {
+  width: 35px;
+  margin-top: 12px;
+}
+
+.whatsapp-float:hover {
+  background-color: #20ba5a;
+}
+
+/* Animación suave */
+@keyframes fade {
+  from {opacity: 0.4;}
+  to {opacity: 1;}
+}
+
+/* Contacto */
+.contacto {
+  background: #003366;
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.contacto a {
+  color: #ffcc00;
+  text-decoration: none;
+}
+
+.contacto a:hover {
+  text-decoration: underline;
+}
+
+.social-contact {
+  margin-top: 20px;
+}
+
+.social-contact .icon {
+  color: #ffcc00;       /* color de los íconos */
+  margin: 0 10px;
+  font-size: 28px;      /* tamaño más grande */
+  text-decoration: none;
+}
+
+.social-contact .icon:hover {
+  color: #ffffff;       /* cambia al pasar el mouse */
+}
