@@ -378,4 +378,27 @@ body {
 
 .social-contact .icon:hover {
   color: #ffffff;       /* cambia al pasar el mouse */
+
+}
+
+.bottom-link {
+  position: fixed;       /* siempre fijo en pantalla */
+  bottom: -40px;         /* lo oculta parcialmente (ajusta el valor) */
+  left: 0;
+  width: 100%;
+  background: #004466;
+  text-align: center;
+  padding: 15px;
+  transition: bottom 0.3s ease; /* animación al mostrar */
+}
+
+.bottom-link a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Al pasar el mouse, se despliega */
+.bottom-link:hover {
+  bottom: 0;
 }
