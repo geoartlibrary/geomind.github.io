@@ -80,22 +80,43 @@
 
 
   <!-- Contacto -->
-  <section id="contacto" class="contacto">
-    <h2>Contáctanos</h2>
-    <p>Teléfono: <a href="tel:+529999999999">+52 999 999 9999</a></p>
-    <p>Email: <a href="mailto:info@empresa.com">info@empresa.com</a></p>
-    <div class="social-contact">
-    <a href="https://www.facebook.com/geoartlibrery/" target="_blank" class="icon">
+ <section id="contacto" class="contacto">
+  <h2>Contáctanos</h2>
+  <p>Teléfono: <a href="tel:+529999999999">+52 999 999 9999</a></p>
+  <p>Email: <a href="mailto:info@empresa.com">info@empresa.com</a></p>
+  <div class="social-contact">
+
+    <!-- Facebook -->
+    <a href="#" onclick="
+      window.location = 'fb://page/geoartlibrery';
+      setTimeout(function() {
+        window.location = 'https://www.facebook.com/geoartlibrery/';
+      }, 500);
+    " class="icon">
       <i class="fab fa-facebook"></i>
     </a>
-    <a href="https://www.instagram.com/geoart_latam/" target="_blank" class="icon">
+
+    <!-- Instagram -->
+    <a href="#" onclick="
+      window.location = 'instagram://user?username=geoart_latam';
+      setTimeout(function() {
+        window.location = 'https://www.instagram.com/geomindsolutions?igsh=MW80bjhtcWs2dzhvNA==';
+      }, 500);
+    " class="icon">
       <i class="fab fa-instagram"></i>
     </a>
-     <a href="https://www.linkedin.com/feed/" target="_blank" class="icon">
-  <i class="fab fa-linkedin"></i>
+
+    <!-- LinkedIn -->
+    <a href="#" onclick="
+      window.location = 'linkedin://profile';
+      setTimeout(function() {
+        window.location = 'https://www.linkedin.com/feed/';
+      }, 500);
+    " class="icon">
+      <i class="fab fa-linkedin"></i>
     </a>
+
   </div>
-  </section>
   <!-- el scrip va al final  -->
   <script src="script1_0.js"></script>
 </body>
