@@ -217,3 +217,10 @@ body {
 .social-contact .icon:hover {
   color: #ffffff;       /* cambia al pasar el mouse */
 }
+.footer {
+  background: #003366;
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
