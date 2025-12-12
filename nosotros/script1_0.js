@@ -113,3 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
     openWithFallback("tiktok://user/@geomindsolutions", "https://www.tiktok.com/@geomindsolutions");
   });
 });
+
+
+

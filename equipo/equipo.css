@@ -104,6 +104,7 @@ body {
   border: 2px solid #ccc;
   border-radius: 10px;
   background: #f9f9f9;
+ 
 }
 
 /* El SVG ocupa todo el ancho disponible */
@@ -118,6 +119,7 @@ body {
   fill: #d9d9d9;
   stroke: #888;
   stroke-width: 0.5;
+  cursor: pointer;
   transition: fill 0.3s ease;
 }
 
@@ -224,3 +226,4 @@ body {
   padding: 15px;
   margin-top: 40px;
 }
+
