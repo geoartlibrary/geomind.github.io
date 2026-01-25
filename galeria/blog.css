@@ -145,6 +145,167 @@ body {
     column-count: 1;
   }
 }
+
+/* Popup encima del mapa */
+#lightbox {
+  display: none;              /* oculto por defecto */
+  position: fixed;
+  inset: 0;                   /* ocupa toda la pantalla */
+  background: rgba(0,0,0,0.8);/* fondo oscuro */
+  z-index: 9999;              /* encima de todo */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Imagen dentro del popup */
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Botón cerrar */
+#lightbox span {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.popup-buttons {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.popup-buttons button {
+  margin: 0 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #ffcc00;
+  color: #333;
+  font-size: 20px; /* tamaño del ícono */
+  transition: background 0.3s;
+}
+
+.popup-buttons button:hover {
+  background: #e6b800;
+  color: #000;
+}
+
+#lightbox-text {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 80%;
+}
+/* Popup general */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* apila imagen, texto y botones */
+  padding: 20px;
+}
+
+/* Imagen dentro del popup */
+#lightbox img {
+  max-width: 90%;
+  max-height: 70vh; /* limita altura en pantallas pequeñas */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  object-fit: contain;
+}
+
+/* Texto debajo de la imagen */
+#lightbox-text {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 90%;
+  word-wrap: break-word;
+}
+
+/* Botones */
+.popup-buttons {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.popup-buttons button {
+  margin: 0 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #ffcc00;
+  color: #333;
+  font-size: 20px;
+  transition: background 0.3s;
+}
+
+.popup-buttons button:hover {
+  background: #e6b800;
+  color: #000;
+}
+
+/* Botón cerrar */
+#close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ===========================
+   RESPONSIVE BREAKPOINTS
+   =========================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  #lightbox img {
+    max-width: 95%;
+    max-height: 60vh;
+  }
+  #lightbox-text {
+    font-size: 0.9rem;
+  }
+  .popup-buttons button {
+    font-size: 18px;
+    padding: 8px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+  #lightbox {
+    padding: 10px;
+  }
+  #lightbox img {
+    max-width: 100%;
+    max-height: 50vh;
+  }
+  #lightbox-text {
+    font-size: 0.85rem;
+  }
+  .popup-buttons button {
+    font-size: 16px;
+    padding: 6px;
+  }
+}
+
 /* Footer */
 .footer {
   background: #003366;
@@ -154,33 +315,6 @@ body {
   margin-top: 40px;
 }
 
-
-/* Botón flotante de WhatsApp */
-.whatsapp-float {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25d366;
-  border-radius: 50%;
-  text-align: center;
-  box-shadow: 2px 2px 5px #999;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
-}
-
-.whatsapp-float img {
-  width: 35px;
-  margin-top: 12px;
-}
-
-.whatsapp-float:hover {
-  background-color: #20ba5a;
-}
 
 /* Animación suave */
 @keyframes fade {
