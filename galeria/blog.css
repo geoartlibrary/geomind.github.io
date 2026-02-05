@@ -101,7 +101,7 @@ body {
 
 /* Contenedor tipo masonry */
 .masonry {
-  column-count: 4;
+  column-count: 3;
   column-gap: 20px;
 }
 
