@@ -107,8 +107,8 @@ height: 100%;
   left: -250px; /* oculto por defecto */
   width: 250px;
   height: 100%;
-  background: #ccc;
-  color: #fff;
+  background: #b17c44;
+  color: #163150;
   padding: 20px;
   transition: left 0.3s ease;
   z-index: 1000;
@@ -117,7 +117,7 @@ height: 100%;
 #sidebar h2 {
   margin-top: 0;
   font-size: 1.5rem;
-  border-bottom: 1px solid #fff0;
+  border-bottom: 1px solid #676b66;
   padding-bottom: 10px;
 }
 
@@ -154,9 +154,9 @@ height: 100%;
 }
 
 #content {
-  margin-left: 100px;
+  margin-left: 0px;
   margin-top: 70px;
-  height: calc(100vh - 0px); /* altura real */
+  height: calc(100vh - 70px); /* altura real */
   padding: 0; 
   box-sizing: border-box;
   overflow: hidden;
@@ -168,53 +168,26 @@ height: 100%;
   min-height: 400px; /* asegura espacio visible */
 }
 
+.coord-info {
+  background: rgba(103,107,102,0.5);
+  padding: 6px;
+  font-size: 12px;
+  border-radius: 4px;
+}
 
-
-/* Footer */
-.footer {
-  background: #003366;
+#nota-movil {
+  background: rgba(255, 0, 0, 0.8);
   color: #fff;
+  padding: 10px;
   text-align: center;
-  padding: 15px;
-  margin-top: 40px;
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
 }
 
-
-
-/* Animación suave */
-@keyframes fade {
-  from {opacity: 0.4;}
-  to {opacity: 1;}
-}
-
-/* Contacto */
-.contacto {
-  background: #003366;
-  color: #fff;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.contacto a {
-  color: #ffcc00;
-  text-decoration: none;
-}
-
-.contacto a:hover {
-  text-decoration: underline;
-}
-
-.social-contact {
-  margin-top: 20px;
-}
-
-.social-contact .icon {
-  color: #ffcc00;       /* color de los íconos */
-  margin: 0 10px;
-  font-size: 28px;      /* tamaño más grande */
-  text-decoration: none;
-}
-
-.social-contact .icon:hover {
-  color: #ffffff;       /* cambia al pasar el mouse */
+.hidden {
+  display: none;
 }

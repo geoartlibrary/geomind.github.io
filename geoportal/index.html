@@ -6,6 +6,7 @@
   <title>GEOPORTAL</title>
   <link rel="icon" href="IMAGENES/logo2.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -32,11 +33,12 @@
    <aside id="sidebar">
      <h2>MINDPORTAL</h2>
      <ul>
-       <li><a href="#mapa">Mapa</a></li>
+
        <li><a href="#capas">Capas</a></li>
+       <ul> <li> <label> <input type="checkbox" id="toggle-hidrologia"> BIOTA </label> </li> </ul>
        <li><a href="#datos">Datos</a></li>
        <li><a href="#analisis">Análisis</a></li>
-       <li><a href="#contacto">Contacto</a></li>
+   
      </ul>
    </aside>
 
@@ -44,8 +46,12 @@
      <div id="mapa-base"></div>
    </main>
 
+<div id="nota-movil" class="hidden"> ⚠️ Este GEOPORTAL está diseñado para PC, no para celular. </div>
+
    <!-- JS de Leaflet -->
    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
    <script src="script.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.0/proj4.js"></script>
+
 </body>
 </html>
