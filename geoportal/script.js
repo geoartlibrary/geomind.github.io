@@ -27,21 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const map = L.map('mapa-base').setView([-0.1807, -78.4678], 13);
+  const map = L.map('mapa-base', {
+    center: [-0.1807, -78.4678],
+    zoom: 12,
+    minZoom: 6,
+    maxZoom: 18,
+    zoomControl: false
+  });
 
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-  maxZoom: 19
-}).addTo(map);
+  const esriSat = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    { maxZoom: 19 }
+  );
+  esriSat.addTo(map);
 
-
-
-  // Forzar recalculado del tamaño del mapa
-  setTimeout(() => {
+  // Recalcular tamaño y forzar centrado
+  window.addEventListener("load", () => {
     map.invalidateSize();
-  }, 500);
-
-  // Marcador en Quito
-  L.marker([-0.1807, -78.4678]).addTo(map)
-    .bindPopup("<b>Quito</b><br>Capital de Ecuador")
-    .openPopup();
+    map.setView([-0.1807, -78.4678], 12);
+  });
 });

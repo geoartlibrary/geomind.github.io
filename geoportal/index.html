@@ -7,54 +7,45 @@
   <link rel="icon" href="IMAGENES/logo2.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-
+</head>
 <body>
    <header>
-    <nav class="navbar">
-      <div class="logo">
-        <a href="index1_0.html">
-        <img src="/IMAGENES/logo.png" alt="Logo de la empresa">
-        </a>
-      </div>
-      <!-- Botón hamburguesa -->
-    <div class="menu-toggle" id="menu-toggle">
-      ☰
-    </div>
-      <ul class="menu" id="menu">
-        <li><a href="https://www.geomindsolutions.com">Inicio</a></li>
-        <li><a href="#top">Nosotros</a></li>
-        <li><a href="/galeria/">Galería</a></li>
-        <li><a href="/equipod/">Equipo</a></li>
-        <li><a href="#contacto">Contactos</a></li>
-      </ul>
-    </nav>
-  </header>
-  
-    <!-- Botón para abrir/cerrar sidebar -->
-  <button id="sidebar-toggle">☰ Menú</button>
+     <nav class="navbar">
+       <div class="logo">
+         <a href="index1_0.html">
+           <img src="/IMAGENES/logo.png" alt="Logo de la empresa">
+         </a>
+       </div>
+       <div class="menu-toggle" id="menu-toggle">☰</div>
+       <ul class="menu" id="menu">
+         <li><a href="https://www.geomindsolutions.com">Inicio</a></li>
+         <li><a href="#top">Nosotros</a></li>
+         <li><a href="/galeria/">Galería</a></li>
+         <li><a href="/equipod/">Equipo</a></li>
+         <li><a href="#contacto">Contactos</a></li>
+       </ul>
+     </nav>
+   </header>
 
-  <!-- Sidebar -->
-  <aside id="sidebar">
-    <h2>MINDPORTAL</h2>
-    <ul>
-      <li><a href="#mapa">Mapa</a></li>
-      <li><a href="#capas">Capas</a></li>
-      <li><a href="#datos">Datos</a></li>
-      <li><a href="#analisis">Análisis</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-  </aside>
+   <button id="sidebar-toggle">☰ Menú</button>
 
-  <!-- Contenido principal -->
- 
+   <aside id="sidebar">
+     <h2>MINDPORTAL</h2>
+     <ul>
+       <li><a href="#mapa">Mapa</a></li>
+       <li><a href="#capas">Capas</a></li>
+       <li><a href="#datos">Datos</a></li>
+       <li><a href="#analisis">Análisis</a></li>
+       <li><a href="#contacto">Contacto</a></li>
+     </ul>
+   </aside>
 
-  <main id="content"> 
-    <div id="mapa-base"></div> 
-</main>
+   <main id="content">
+     <div id="mapa-base"></div>
+   </main>
 
-<!-- JS de Leaflet --> 
- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</body>
-  <script src="script.js"></script>
+   <!-- JS de Leaflet -->
+   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+   <script src="script.js"></script>
 </body>
 </html>
