@@ -28,22 +28,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const map = L.map('mapa-base', {
-    center: [-0.1807, -78.4678],
+    center: [-0.1807, -78.4678], // Quito
     zoom: 12,
     minZoom: 6,
     maxZoom: 18,
     zoomControl: false
   });
 
-  const esriSat = L.tileLayer(
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    { maxZoom: 19 }
+  // Esri World Topographic Map
+  const esriTopo = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+    {
+      maxZoom: 19,
+      attribution: 'Tiles © Esri — Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), MapmyIndia, TomTom'
+    }
   );
-  esriSat.addTo(map);
 
-  // Recalcular tamaño y forzar centrado
+  esriTopo.addTo(map);
+
+  // Recalcular tamaño y centrar
   window.addEventListener("load", () => {
     map.invalidateSize();
     map.setView([-0.1807, -78.4678], 12);
   });
+
+  // Marcador en Quito
+  L.marker([-0.1807, -78.4678]).addTo(map)
+    .bindPopup("<b>Quito</b><br>Capital de Ecuador")
+    .openPopup();
 });
