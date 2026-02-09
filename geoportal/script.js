@@ -68,15 +68,28 @@ window.addEventListener("load", () => {
   );
 
   // ✅ Capa WMS de Cobertura de la Tierra y Biota (IGM Ecuador)
-  const biota = L.tileLayer.wms(
-    "https://www.geoportaligm.gob.ec/arcgis/services/Cartografia/Cobertura_Tierra_Biota/MapServer/WMSServer",
-    {
-      layers: '0',              // número de capa dentro del servicio
-      format: 'image/png',
-      transparent: true,
-      attribution: '© IGM Ecuador'
-    }
-  );
+const biota = L.tileLayer.wms(
+  "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?",
+  {
+    layers: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+    format: 'image/png',
+    transparent: true,
+    opacity: 0.8,
+    attribution: '© NASA GIBS'
+  }
+);
+
+const temperatura = L.tileLayer.wms(
+  "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?",
+  {
+    layers: 'MODIS_Terra_Land_Surface_Temp_Day',
+    format: 'image/png',
+    transparent: true,
+    opacity: 0.8,
+    attribution: '© NASA GIBS'
+  }
+);
+
 
   // ✅ Control de capas de Leaflet (solo bases)
   L.control.layers(
@@ -131,5 +144,10 @@ window.addEventListener("load", () => {
   // ✅ Vincular checkbox del aside para Biota
   document.getElementById("toggle-hidrologia").addEventListener("change", e => {
     e.target.checked ? map.addLayer(biota) : map.removeLayer(biota);
+  });
+
+  // ✅ Vincular checkbox del aside para Biota
+  document.getElementById("toggle-temperatura").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(temperatura) : map.removeLayer(temperatura);
   });
 });
