@@ -47,65 +47,37 @@ window.addEventListener("load", () => {
     zoomControl: false
   });
 
-  // Capas base
+  // ✅ Única capa base (Esri Topo)
   const esriTopo = L.tileLayer(
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
     { maxZoom: 19 }
   ).addTo(map);
 
-  const esriSat = L.tileLayer(
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    { maxZoom: 19 }
-  );
-
-  const osmDark = L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+  // ✅ Capas WMS (NASA GIBS)
+  const biota = L.tileLayer.wms(
+    "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?",
     {
-      subdomains: ['a','b','c','d'],
-      maxZoom: 20,
-      attribution: '&copy; OSM & CARTO'
+      layers: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+      format: 'image/png',
+      transparent: true,
+      opacity: 0.8,
+      attribution: '© NASA GIBS'
     }
   );
 
-  // ✅ Capa WMS de Cobertura de la Tierra y Biota (IGM Ecuador)
-const biota = L.tileLayer.wms(
-  "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?",
-  {
-    layers: 'MODIS_Terra_CorrectedReflectance_TrueColor',
-    format: 'image/png',
-    transparent: true,
-    opacity: 0.8,
-    attribution: '© NASA GIBS'
-  }
-);
-
-const temperatura = L.tileLayer.wms(
-  "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?",
-  {
-    layers: 'MODIS_Terra_Land_Surface_Temp_Day',
-    format: 'image/png',
-    transparent: true,
-    opacity: 0.8,
-    attribution: '© NASA GIBS'
-  }
-);
-
-
-  // ✅ Control de capas de Leaflet (solo bases)
-  L.control.layers(
+  const temperatura = L.tileLayer.wms(
+    "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?",
     {
-      "Esri Topo": esriTopo,
-      "Esri Satélite": esriSat,
-      "OSM Oscuro": osmDark
-    },
-    null,
-    { position: 'topright' }
-  ).addTo(map);
+      layers: 'MODIS_Terra_Land_Surface_Temp_Day',
+      format: 'image/png',
+      transparent: true,
+      opacity: 0.8,
+      attribution: '© NASA GIBS'
+    }
+  );
 
-  // Control de zoom
+  // ✅ Ya no hay control de capas, solo zoom y escala
   L.control.zoom({ position: 'topright' }).addTo(map);
-
-  // Escala
   L.control.scale({ position: 'bottomleft', imperial: false, maxWidth: 200 }).addTo(map);
 
   // Coordenadas UTM dinámicas
@@ -139,14 +111,11 @@ const temperatura = L.tileLayer.wms(
     coordDiv.update(`<b>UTM ${zone}${hemisphere}</b><br>E: ${easting} m<br>N: ${northing} m`);
   });
 
-  
-
-  // ✅ Vincular checkbox del aside para Biota
+  // ✅ Vincular checkboxes del aside SOLO para overlays
   document.getElementById("toggle-hidrologia").addEventListener("change", e => {
     e.target.checked ? map.addLayer(biota) : map.removeLayer(biota);
   });
 
-  // ✅ Vincular checkbox del aside para Biota
   document.getElementById("toggle-temperatura").addEventListener("change", e => {
     e.target.checked ? map.addLayer(temperatura) : map.removeLayer(temperatura);
   });
