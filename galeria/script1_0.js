@@ -83,6 +83,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+  // Condición: ocultar imágenes hasta que carguen
+  images.forEach((img, i) => {
+    img.style.opacity = "0"; // ocultar inicialmente
+    img.loading = "lazy";    // carga diferida nativa
+
+    img.addEventListener("load", () => {
+      img.style.opacity = "1"; // mostrar cuando esté cargada
+      img.style.transition = "opacity 0.5s ease";
+    });
+    });
+
+
 // fallback
 document.addEventListener("DOMContentLoaded", () => {
   function openWithFallback(deepLink, webUrl) {
@@ -120,6 +132,3 @@ document.addEventListener("DOMContentLoaded", () => {
     openWithFallback("tiktok://user/@geomindsolutions", "https://www.tiktok.com/@geomindsolutions");
   });
 });
-
-
-
