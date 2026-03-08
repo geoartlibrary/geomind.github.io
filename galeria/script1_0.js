@@ -1,122 +1,111 @@
-// Selecciona el botón hamburguesa y el menú
-const toggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu');
+/* ============================================================
+   GEOMIND – script1_0.js
+   ============================================================ */
 
-// Evento para abrir/cerrar menú
+/* ── 1. Menú hamburguesa ── */
+const toggle = document.getElementById('menu-toggle');
+const menu   = document.getElementById('menu');
+
 toggle.addEventListener('click', () => {
   menu.classList.toggle('active');
 });
-// Cerrar menú al hacer clic fuera
-document.addEventListener("click", (event) => {
-  const isClickInsideMenu = menu.contains(event.target);
-  const isClickOnToggle = toggle.contains(event.target); // usar la misma variable
 
-  if (!isClickInsideMenu && !isClickOnToggle) {
-    menu.classList.remove("active");
+document.addEventListener('click', (e) => {
+  if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+    menu.classList.remove('active');
   }
 });
 
-// pop up
-document.addEventListener("DOMContentLoaded", () => {
-  const images = document.querySelectorAll(".masonry .item img");
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  const closeBtn = document.getElementById("close");
 
-  // Abrir popup al hacer clic en imagen
-  images.forEach(img => {
-    img.addEventListener("click", () => {
-      lightbox.style.display = "flex";
-      lightboxImg.src = img.src;
+/* ── 2. Lazy loading con IntersectionObserver ── */
+document.addEventListener('DOMContentLoaded', () => {
+
+  const lazyImages = document.querySelectorAll('img.lazy');
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const img = entry.target;
+      img.src = img.dataset.src;
+
+      img.addEventListener('load', () => {
+        img.classList.add('loaded');
+      }, { once: true });
+
+      img.addEventListener('error', () => {
+        img.classList.add('loaded');
+      }, { once: true });
+
+      obs.unobserve(img);
     });
+  }, {
+    rootMargin: '0px 0px 200px 0px',
+    threshold: 0
   });
 
-  // Cerrar con botón
-  closeBtn.addEventListener("click", () => {
-    lightbox.style.display = "none";
+  lazyImages.forEach(img => observer.observe(img));
+
+
+  /* ── 3. Lightbox / Popup ── */
+  const lightbox     = document.getElementById('lightbox');
+  const lightboxImg  = document.getElementById('lightbox-img');
+  const lightboxText = document.getElementById('lightbox-text');
+  const closeBtn     = document.getElementById('close');
+  const downloadBtn  = document.getElementById('download');
+
+  document.querySelector('.masonry').addEventListener('click', (e) => {
+    const img = e.target.closest('img');
+    if (!img) return;
+    lightbox.style.display = 'flex';
+    lightboxImg.src  = img.src || img.dataset.src;
+    lightboxText.textContent = img.alt;
   });
 
-  // Cerrar al hacer clic fuera de la imagen
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) {
-      lightbox.style.display = "none";
-    }
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const images = document.querySelectorAll(".masonry .item img");
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  const lightboxText = document.getElementById("lightbox-text");
-  const closeBtn = document.getElementById("close");
-  const downloadBtn = document.getElementById("download");
-
-  // Abrir popup al hacer clic en imagen
-  images.forEach(img => {
-    img.addEventListener("click", () => {
-      lightbox.style.display = "flex";
-      lightboxImg.src = img.src;
-      lightboxText.textContent = img.alt; // usa el alt como texto dinámico
-    });
+  closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
   });
 
-  // Cerrar con botón
-  closeBtn.addEventListener("click", () => {
-    lightbox.style.display = "none";
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) lightbox.style.display = 'none';
   });
 
-  // Cerrar al hacer clic fuera de la imagen
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) {
-      lightbox.style.display = "none";
-    }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') lightbox.style.display = 'none';
   });
 
-  // Descargar imagen
-  downloadBtn.addEventListener("click", () => {
-    const link = document.createElement("a");
+  downloadBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
     link.href = lightboxImg.src;
-    link.download = "imagen.jpg"; // nombre por defecto
+    const name = lightboxImg.alt
+      ? lightboxImg.alt.split(',')[0].trim().replace(/\s+/g, '_')
+      : 'geomind_imagen';
+    link.download = name + '.jpg';
     link.click();
   });
-});
 
 
-// fallback
-document.addEventListener("DOMContentLoaded", () => {
+  /* ── 4. Deep-links redes sociales ── */
   function openWithFallback(deepLink, webUrl) {
-    // Intenta abrir la app
     window.location = deepLink;
-    // Si falla, abre la versión web
-    setTimeout(() => {
-      window.location = webUrl;
-    }, 500);
+    setTimeout(() => { window.location = webUrl; }, 500);
   }
 
-  document.getElementById("facebook-link").addEventListener("click", (e) => {
-    e.preventDefault();
-    openWithFallback("fb://page/100002075693941", "https://www.facebook.com/geoartlibrery/");
+  const socialLinks = {
+    'facebook-link':  ['fb://page/100002075693941', 'https://www.facebook.com/geoartlibrery/'],
+    'instagram-link': ['instagram://user?username=geomindsolutions', 'https://www.instagram.com/geomindsolutions/'],
+    'linkedin-link':  ['linkedin://profile/geomind-global-solutions-3484ab399', 'https://www.linkedin.com/in/geomind-global-solutions-3484ab399'],
+    'youtube-link':   ['vnd.youtube://channel/UCXXXXXXXX', 'https://www.youtube.com/@GeomindGlobalSolutions'],
+    'tiktok-link':    ['tiktok://user/@geomindsolutions', 'https://www.tiktok.com/@geomindsolutions'],
+  };
+
+  Object.entries(socialLinks).forEach(([id, [deep, web]]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      openWithFallback(deep, web);
+    });
   });
 
-  document.getElementById("instagram-link").addEventListener("click", (e) => {
-    e.preventDefault();
-    openWithFallback("instagram://user?username=geomindsolutions", "https://www.instagram.com/geomindsolutions/");
-  });
-
-  document.getElementById("linkedin-link").addEventListener("click", (e) => {
-    e.preventDefault();
-    openWithFallback("linkedin://profile/geomind-global-solutions-3484ab399", "https://www.linkedin.com/in/geomind-global-solutions-3484ab399");
-  });
-
-  document.getElementById("youtube-link").addEventListener("click", (e) => {
-    e.preventDefault();
-    openWithFallback("vnd.youtube://channel/UCXXXXXXXX", "https://www.youtube.com/@GeomindGlobalSolutions");
-    // ⚠️ Reemplaza UCXXXXXXXX con el ID real de tu canal
-  });
-
-  document.getElementById("tiktok-link").addEventListener("click", (e) => {
-    e.preventDefault();
-    openWithFallback("tiktok://user/@geomindsolutions", "https://www.tiktok.com/@geomindsolutions");
-  });
 });

@@ -353,3 +353,37 @@ body {
 .social-contact .icon:hover {
   color: #ffffff;       /* cambia al pasar el mouse */
 }
+
+/* ===============================
+   LAZY LOADING - Skeleton + Fade-in
+   =============================== */
+
+/* Placeholder animado mientras la imagen no cargó */
+.item {
+  min-height: 120px; /* evita colapso antes de cargar */
+}
+
+.item img.lazy {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  min-height: 120px;
+  width: 100%;
+  display: block;
+}
+
+/* Una vez cargada: se vuelve visible */
+.item img.lazy.loaded {
+  opacity: 1;
+  animation: none;
+  background: none;
+  min-height: unset;
+}
+
+/* Efecto shimmer tipo skeleton */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
