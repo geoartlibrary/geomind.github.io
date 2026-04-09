@@ -387,3 +387,12 @@ body {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+
+/* relojes */
+.clocks-minimal { display: inline-flex; gap: 24px; align-items: center; flex-wrap: wrap; padding: 8px 0; }
+.cm-item { display: flex; align-items: center; gap: 8px; }
+.cm-item + .cm-item { padding-left: 24px; border-left: 0.5px solid rgba(255,255,255,0.1); }
+.cm-flag { font-size: 13px; line-height: 1; }
+.cm-city { font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+.cm-time { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); font-variant-numeric: tabular-nums; }

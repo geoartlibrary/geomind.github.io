@@ -109,3 +109,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+(function(){
+  const zones=[
+    {city:"Saskatchewan", tz:"America/Regina",       flag:"🇨🇦"},
+    {city:"México",        tz:"America/Mexico_City",  flag:"🇲🇽"},
+    {city:"Quito",         tz:"America/Guayaquil",    flag:"🇪🇨"},
+    {city:"Madrid",        tz:"Europe/Madrid",         flag:"🇪🇸"}
+  ];
+
+  const wrap=document.getElementById("cm");
+  if(!wrap) return;
+
+  zones.forEach(z=>{
+    const id="cm-"+z.tz.replace(/\//g,"-");
+    const item=document.createElement("div");
+    item.className="cm-item";
+    item.innerHTML=
+      `<span class="cm-flag">${z.flag}</span>`+
+      `<div class="cm-info">`+
+        `<div class="cm-city">${z.city}</div>`+
+        `<div class="cm-time" id="${id}">--:--:--</div>`+
+      `</div>`;
+    wrap.appendChild(item);
+  });
+
+  function tick(){
+    const now=new Date();
+    zones.forEach(z=>{
+      const el=document.getElementById("cm-"+z.tz.replace(/\//g,"-"));
+      if(el) el.textContent=now.toLocaleTimeString("es-ES",{
+        timeZone:z.tz,
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+        hour12:false
+      });
+    });
+  }
+
+  tick();
+  setInterval(tick,1000);
+})();
