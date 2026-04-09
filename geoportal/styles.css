@@ -191,3 +191,189 @@ height: 100%;
 .hidden {
   display: none;
 }
+
+/* ══════════════════════════════════════════
+   PANEL DE ANÁLISIS — Captura de coordenadas
+═══════════════════════════════════════════ */
+
+.section-title > a {
+  font-size: 1rem;
+  color: #163150 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.analisis-panel {
+  background: rgba(0,0,0,0.12);
+  border-radius: 8px;
+  padding: 10px 8px 12px;
+  margin-top: 4px !important;
+}
+
+/* Selector de modo */
+.modo-label {
+  font-size: 11px;
+  font-weight: bold;
+  color: #163150;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.modo-btns {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.modo-btn {
+  flex: 1;
+  background: rgba(255,255,255,0.35);
+  border: 1.5px solid rgba(22,49,80,0.3);
+  color: #163150;
+  padding: 5px 4px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modo-btn:hover {
+  background: rgba(255,255,255,0.6);
+}
+
+.modo-btn.active {
+  background: #163150;
+  color: #ffcc00;
+  border-color: #163150;
+}
+
+/* Botón activar captura */
+.captura-btn {
+  width: 100%;
+  background: #163150;
+  color: #fff;
+  border: none;
+  padding: 7px 0;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 6px;
+}
+
+.captura-btn.capturing {
+  background: #c0392b;
+  animation: pulse-red 1.2s infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.75; }
+}
+
+/* Estado de captura */
+.captura-status {
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+
+.captura-status.off {
+  background: rgba(0,0,0,0.15);
+  color: #555;
+}
+
+.captura-status.on-puntos {
+  background: #27ae60;
+  color: #fff;
+}
+
+.captura-status.on-poligono {
+  background: #2980b9;
+  color: #fff;
+}
+
+/* Tabla de coordenadas */
+.tabla-wrapper {
+  max-height: 180px;
+  overflow-y: auto;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(22,49,80,0.25);
+}
+
+#tabla-coords {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  background: rgba(255,255,255,0.85);
+  color: #163150;
+}
+
+#tabla-coords thead {
+  background: #163150;
+  color: #ffcc00;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#tabla-coords th,
+#tabla-coords td {
+  padding: 4px 3px;
+  text-align: center;
+  border-bottom: 1px solid rgba(22,49,80,0.1);
+  white-space: nowrap;
+}
+
+#tabla-coords tr:hover td {
+  background: rgba(255,204,0,0.15);
+  cursor: pointer;
+}
+
+.empty-msg {
+  color: #999;
+  font-style: italic;
+  padding: 10px 0 !important;
+}
+
+/* Acciones */
+.analisis-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 6px 4px;
+  font-size: 11px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.action-btn:hover { opacity: 0.85; }
+
+.action-btn.danger {
+  background: #c0392b;
+  color: #fff;
+}
+
+.action-btn.success {
+  background: #27ae60;
+  color: #fff;
+}
+
+/* Cursor mapa en modo captura */
+body.capturando #mapa-base {
+  cursor: crosshair !important;
+}

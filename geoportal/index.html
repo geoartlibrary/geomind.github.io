@@ -38,8 +38,65 @@
        <ul> <li> <label> <input type="checkbox" id="toggle-hidrologia"> Satelite MODIS </label> </li> </ul>
        <ul> <li> <label> <input type="checkbox" id="toggle-temperatura"> MODIS temperatura </label> </li> </ul>
        <li><a href="#datos">Datos</a></li>
-       <li><a href="#analisis">Análisis</a></li>
-   
+       <!-- ══════════════════════════════════════
+            SECCIÓN ANÁLISIS — Captura de coordenadas
+       ═══════════════════════════════════════════ -->
+       <li class="section-title"><a href="#analisis">Análisis</a></li>
+
+       <li class="analisis-panel">
+
+         <!-- Selector de modo -->
+         <div class="modo-label">Modo de captura:</div>
+         <div class="modo-btns">
+           <button id="btn-modo-puntos" class="modo-btn active" title="Clic para añadir puntos individuales">
+             <i class="fa-solid fa-location-dot"></i> Puntos
+           </button>
+           <button id="btn-modo-poligono" class="modo-btn" title="Clic para trazar vértices; doble clic para cerrar">
+             <i class="fa-solid fa-draw-polygon"></i> Polígono
+           </button>
+         </div>
+
+         <!-- Activar/desactivar captura -->
+         <button id="btn-toggle-captura" class="captura-btn">
+           <i class="fa-solid fa-crosshairs"></i> Activar captura
+         </button>
+
+         <!-- Indicador de estado -->
+         <div id="captura-status" class="captura-status off">Captura inactiva</div>
+
+         <!-- Tabla de coordenadas -->
+         <div class="tabla-wrapper">
+           <table id="tabla-coords">
+             <thead>
+               <tr>
+                 <th>#</th>
+                 <th>Lat</th>
+                 <th>Lon</th>
+                 <th>E (m)</th>
+                 <th>N (m)</th>
+                 <th>Zona</th>
+               </tr>
+             </thead>
+             <tbody id="tabla-coords-body">
+               <tr id="row-empty">
+                 <td colspan="6" class="empty-msg">Sin puntos capturados</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+
+         <!-- Acciones -->
+         <div class="analisis-actions">
+           <button id="btn-limpiar" class="action-btn danger" title="Eliminar todos los puntos">
+             <i class="fa-solid fa-trash"></i> Limpiar
+           </button>
+           <button id="btn-exportar-csv" class="action-btn success" title="Descargar CSV">
+             <i class="fa-solid fa-file-csv"></i> Exportar CSV
+           </button>
+         </div>
+
+       </li>
+       <!-- ══════════════════════════════════════ -->
      </ul>
    </aside>
 
@@ -52,8 +109,8 @@
    <!-- JS de Leaflet -->
    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
    <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
-   <script src="script.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.0/proj4.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
