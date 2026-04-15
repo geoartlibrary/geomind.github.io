@@ -30,20 +30,45 @@
 
    <button id="sidebar-toggle">☰ Menú</button>
 
+
+
    <aside id="sidebar">
      <h2>MINDPORTAL</h2>
      <ul>
 
-       <li><a href="#capas">Capas</a></li>
-        <ul> <li> <label> <input type="checkbox" id="toggle-geologiasub"> GeologÍa de Sudamerica </label> </li> </ul>
-        <ul> <li> <label> <input type="checkbox" id="toggle-geologia"> Geología global </label> </li> </ul>
-        <ul> <li> <label> <input type="checkbox" id="toggle-petroleo"> Minerales criticos </label> </li> </ul>
-        <ul> <li> <label> <input type="checkbox" id="toggle-hidrologia"> Volcanes </label> </li> </ul>
-       <li><a href="#datos">Datos</a></li>
+       <li class="section-title" >
+  <button class="accordion-btn">Capas</button>
+  <ul class="accordion-content"></a></li>
+        <ul> <li> <label> <input type="checkbox" id="toggle-geologiasub"> Geología de Sudamerica </label>  <a href="#" data-layer= "GeologÍa de Sudamerica" class="legend-link" data-legend="SUD/leyenda.pdf">
+    ☰
+  </a> </li> </ul>
+        <ul> <li> <label> <input type="checkbox" id="toggle-geologia"> Geología global </label> <a href="#" data-layer= "Geología global" class="legend-link" data-legend="WORLD/leyenda.png">
+    ☰
+  </a> </li> </ul>
+        <ul> <li> <label> <input type="checkbox" id="toggle-petroleo"> Minerales criticos </label> 
+  </a> </li> </ul>
+        <ul> <li> <label> <input type="checkbox" id="toggle-hidrologia"> Volcanes </label> 
+  </a> </li> </ul>
+
+
+    </ul>
+  </li>
+        
+<li class="section-title">
+  <button class="accordion-btn">Datos</button>
+  <ul class="accordion-content">
+    <li>No hay datos disponibles</li>
+  </ul>
+</li>
+
        <!-- ══════════════════════════════════════
             SECCIÓN ANÁLISIS — Captura de coordenadas
        ═══════════════════════════════════════════ -->
-       <li class="section-title"><a href="#analisis">Análisis</a></li>
+
+
+     <li class="section-title">
+  <button class="accordion-btn">Análisis</button>
+  <ul class="accordion-content">
 
        <li class="analisis-panel">
 
@@ -99,7 +124,88 @@
 
        </li>
        <!-- ══════════════════════════════════════ -->
+<!-- ══════════════════════════════════════ -->
+
+       <!-- ══════════════════════════════════════
+            SECCIÓN ANÁLISIS — Buscar coordenada
+       ═══════════════════════════════════════════ -->
+       <li class="section-title"> </a></li>
+
+       <li class="analisis-panel buscar-panel">
+
+         <!-- Pestañas de sistema de coordenadas -->
+         <div class="modo-label">Sistema de referencia:</div>
+         <div class="modo-btns">
+           <button id="buscar-tab-geo" class="modo-btn active" title="Coordenadas geográficas en grados decimales">
+             <i class="fa-solid fa-globe"></i> Geog. (DD)
+           </button>
+           <button id="buscar-tab-utm" class="modo-btn" title="Coordenadas UTM — Easting / Northing">
+             <i class="fa-solid fa-ruler-combined"></i> UTM
+           </button>
+         </div>
+
+         <!-- Panel Geográfico (DD) -->
+         <div id="buscar-geo-panel">
+           <div class="buscar-row">
+             <label class="buscar-lbl">Latitud</label>
+             <input type="number" id="buscar-lat" class="buscar-input"
+                    placeholder="-1.831200" step="0.000001" min="-90" max="90">
+           </div>
+           <div class="buscar-row">
+             <label class="buscar-lbl">Longitud</label>
+             <input type="number" id="buscar-lon" class="buscar-input"
+                    placeholder="-78.183400" step="0.000001" min="-180" max="180">
+           </div>
+         </div>
+
+         <!-- Panel UTM -->
+         <div id="buscar-utm-panel" style="display:none">
+           <div class="buscar-row">
+             <label class="buscar-lbl">Easting (m)</label>
+             <input type="number" id="buscar-e" class="buscar-input"
+                    placeholder="760000" step="1">
+           </div>
+           <div class="buscar-row">
+             <label class="buscar-lbl">Northing (m)</label>
+             <input type="number" id="buscar-n" class="buscar-input"
+                    placeholder="9797000" step="1">
+           </div>
+           <div class="buscar-row buscar-row-inline">
+             <div style="flex:1">
+               <label class="buscar-lbl">Zona #</label>
+               <input type="number" id="buscar-zona" class="buscar-input"
+                      placeholder="17" min="1" max="60">
+             </div>
+             <div style="flex:1; margin-left:6px">
+               <label class="buscar-lbl">Hemisferio</label>
+               <select id="buscar-hem" class="buscar-input">
+                 <option value="S">Sur (S)</option>
+                 <option value="N">Norte (N)</option>
+               </select>
+             </div>
+           </div>
+         </div>
+
+         <!-- Botón buscar -->
+         <button id="btn-buscar-coord" class="captura-btn" style="margin-top:8px">
+           <i class="fa-solid fa-magnifying-glass-location"></i> Ir a coordenada
+         </button>
+
+         <!-- Resultado / error -->
+         <div id="buscar-status" class="buscar-status"></div>
+
+         <!-- Limpiar marcador de búsqueda -->
+         <button id="btn-limpiar-busqueda" class="action-btn danger"
+                 style="width:100%; margin-top:4px; display:none">
+           <i class="fa-solid fa-circle-xmark"></i> Quitar marcador
+         </button>
+
+       </li>
+       <!-- ══════════════════════════════════════ -->
+
+
      </ul>
+     </li>
    </aside>
 
    <main id="content">
