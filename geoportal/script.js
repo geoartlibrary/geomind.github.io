@@ -33,17 +33,20 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
 
 // ─── POP PARA LA LEYENDA ───────────────────────────────────────────────────────────
 // Crear modal dinámico
-function showLegend(layerId, legendUrl) {
+function showLegend(layerId, legendUrls) {
   const modal = document.createElement("div");
   modal.className = "legend-modal";
+
+  // Si hay varias imágenes, separarlas por comas en el atributo data-legend
+  const urls = legendUrls.split(",");
+  const content = urls.map(url =>
+    `<img src="${url.trim()}" alt="Leyenda de ${layerId}" style="max-width:100%; margin:8px 0;">`
+  ).join("");
+
   modal.innerHTML = `
     <div class="legend-modal-content">
       <h3>Leyenda - ${layerId}</h3>
-      ${
-        legendUrl.toLowerCase().endsWith(".pdf")
-          ? `<iframe src="${legendUrl}" width="100%" height="600px" style="border:none"></iframe>`
-          : `<img src="${legendUrl}" alt="Leyenda de ${layerId}" style="max-width:100%">`
-      }
+      ${content}
       <button class="legend-close">Cerrar</button>
     </div>
   `;
@@ -54,7 +57,6 @@ function showLegend(layerId, legendUrl) {
     document.body.removeChild(modal);
   });
 }
-
 document.querySelectorAll(".legend-link").forEach(link => {
   link.addEventListener("click", (e) => {
     e.preventDefault(); // evita que el navegador recargue la página
