@@ -40,34 +40,30 @@ document.addEventListener("DOMContentLoaded", () => {
     { maxZoom: 19 }
   ).addTo(map);
 
-  const biota = L.tileLayer.wms(
-    "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?",
-    { layers: 'MODIS_Terra_CorrectedReflectance_TrueColor', format: 'image/png', transparent: true, opacity: 0.8 }
-  );
- const NASAGIBS_ModisTerraTrueColorCR = L.tileLayer(
-      'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_TrueColor/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}',
-      {
-        attribution: 'Imagery provided by NASA GIBS (ESDIS)',
-        bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
-        minZoom: 1,
-        maxZoom: 9,
-        format: 'jpg',
-        time: '',
-        tilematrixset: 'GoogleMapsCompatible_Level'
+const volcanes = L.esri.featureLayer({
+      url: "https://services4.arcgis.com/QdHwhlbx61LR3TWb/arcgis/rest/services/GVP_Volcano_List_Holocene_URL/FeatureServer/0",
+      pointToLayer: function (geojson, latlng) {
+        return L.circleMarker(latlng, {
+          radius: 6,
+          fillColor: "red",
+          color: "#fff",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        });
+      },
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          layer.bindPopup(
+            "<b>Volcán:</b> " + feature.properties.Volcano_Name + "<br>" +
+            "<b>País:</b> " + feature.properties.Country + "<br>" +
+            "<b>Lat:</b> " + feature.properties.Latitude + "<br>" +
+            "<b>Lon:</b> " + feature.properties.Longitude
+          );
+        }
       }
-    );
-const NASAGIBS_ModisTerraBands367CR = L.tileLayer(
-      'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_Bands367/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}',
-      {
-        attribution: 'Imagery provided by NASA GIBS (ESDIS)',
-        bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
-        minZoom: 1,
-        maxZoom: 9,
-        format: 'jpg',
-        time: '',
-        tilematrixset: 'GoogleMapsCompatible_Level'
-      }
-    );
+    });
+
     const geologyLayer = L.tileLayer.wms(
       "https://mapsref.brgm.fr/wxs/1GG/CGMW_Bedrock_and_Structural_Geology?",
       {
@@ -87,8 +83,34 @@ const NASAGIBS_ModisTerraBands367CR = L.tileLayer(
         version: '1.3.0',
         attribution: 'SGC · Mapa Geológico de Suramérica'
       }
-    )
-  // Barra de coordenadas UTM
+    );
+    // Capa en teselas de ArcGIS REST (TilesOnly)
+
+const critMinLayer = L.esri.featureLayer({
+      url: "https://services1.arcgis.com/SR1muQK0r6SVF2nb/arcgis/rest/services/Global_Critical_Minerals/FeatureServer/0",
+      pointToLayer: function (geojson, latlng) {
+        return L.circleMarker(latlng, {
+          radius: 5,
+          fillColor: "#ff7800",
+          color: "#000",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        });
+      },
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          layer.bindPopup(
+            "<b>" + (feature.properties.DEPOSIT_NAME || "Sin nombre") + "</b><br>" +
+            "Mineral: " + (feature.properties.CRITICAL_MINERAL || "N/A") + "<br>" +
+            "Tipo: " + (feature.properties.DEPOSIT_TYPE || "N/A") + "<br>" +
+            "Ubicación: " + (feature.properties.LOCATION || "")
+          );
+        }
+      }
+    });
+
+    // Barra de coordenadas UTM
   const coordDiv = L.control({ position: 'bottomleft' });
   coordDiv.onAdd = function () {
     this._div = L.DomUtil.create('div', 'coord-info');
@@ -114,16 +136,16 @@ const NASAGIBS_ModisTerraBands367CR = L.tileLayer(
   });
 
   document.getElementById("toggle-hidrologia").addEventListener("change", e => {
-    e.target.checked ? map.addLayer(NASAGIBS_ModisTerraBands367CR) : map.removeLayer(NASAGIBS_ModisTerraBands367CR);
-  });
-document.getElementById("toggle-Lansat").addEventListener("change", e => {
-    e.target.checked ? map.addLayer(NASAGIBS_ModisTerraTrueColorCR) : map.removeLayer(NASAGIBS_ModisTerraTrueColorCR);
+    e.target.checked ? map.addLayer(volcanes) : map.removeLayer(volcanes);
   });
 document.getElementById("toggle-geologia").addEventListener("change", e => {
     e.target.checked ? map.addLayer(geologyLayer) : map.removeLayer(geologyLayer);
   });
 document.getElementById("toggle-geologiasub").addEventListener("change", e => {
     e.target.checked ? map.addLayer(geologysudamerica) : map.removeLayer(geologysudamerica);
+  });
+  document.getElementById("toggle-petroleo").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(critMinLayer) : map.removeLayer(critMinLayer);
   });
   //  HERRAMIENTA DE CAPTURA DE COORDENADAS
   // ═══════════════════════════════════════════════
