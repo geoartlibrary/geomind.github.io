@@ -285,6 +285,74 @@ const geoUnitsLayer = L.esri.featureLayer({
   }
 });
 
+// ── COLORES POR SIMBOLO GLG (extraídos del renderer del servicio África) ─────
+const africaColors = {
+  "C":    "#8391d4", // Carboniferous
+  "CD":   "#ffbee8", // Carboniferous + Devonian
+  "Cm":   "#ffa1a1", // Cambrian
+  "D":    "#ffbebe", // Devonian
+  "DS":   "#c5cdeb", // Devonian + Silurian
+  "Du":   "#8f8ef5", // Upper/Middle Devonian
+  "H2O":  "#bee8ff", // Internal Water Body
+  "J":    "#a3ff73", // Jurassic
+  "JC":   "#a8ffd1", // Jurassic–Carboniferous
+  "JTr":  "#beffe8", // Jurassic–Triassic
+  "Jl":   "#89cd66", // Lower Triassic
+  "K":    "#d3ffbe", // Cretaceous
+  "KC":   "#d4e8ff", // Cretaceous–Carboniferous
+  "KJ":   "#b4d79e", // Cretaceous–Jurassic
+  "Kl":   "#b4d79e", // Lower Cretaceous
+  "Mz":   "#9eaad7", // Mesozoic
+  "MzPz": "#e3ffe8", // Mesozoic–Paleozoic
+  "O":    "#d08fdb", // Ordovician
+  "OCm":  "#f5b5c8", // Ordovician–Cambrian
+  "P":    "#7af5ca", // Permian
+  "PC":   "#b5fff2", // Permian–Carboniferous
+  "Pz":   "#d79e9e", // Paleozoic
+  "PzpC": "#f0d4ff", // Paleozoic–Precambrian
+  "Q":    "#ffff73", // Quaternary
+  "QT":   "#ffebbe", // Cenozoic
+  "Qp":   "#f5ca7a", // Pleistocene
+  "S":    "#aa66cd", // Silurian
+  "SO":   "#d69dbc", // Silurian–Ordovician
+  "T":    "#ffaa00", // Tertiary
+  "TK":   "#e9ffbe", // Tertiary–Cretaceous
+  "Tr":   "#9effd0", // Triassic
+  "TrP":  "#a3ffcf", // Triassic–Permian
+  "Trl":  "#66cdaa", // Lower Triassic
+  "pCm":  "#d6c1c1"  // Precambrian
+};
+
+// ── FUNCIÓN DE COLOR ───────────────────────────────────────────────
+function getAfricaColor(feature) {
+  const symbol = feature.properties.GLG;
+  return africaColors[symbol] || "#cccccc";
+}
+
+// ── LAYER CON ESTILO ───────────────────────────────────────────────
+const africaGeologyLayer = L.esri.featureLayer({
+  url: "https://services.arcgis.com/v01gqwM5QqNysAAi/ArcGIS/rest/services/Africa_Geology/FeatureServer/2",
+  style: function(feature) {
+    return {
+      color: "#555",
+      weight: 0.5,
+      fillColor: getAfricaColor(feature),
+      fillOpacity: 1
+    };
+  },
+  onEachFeature: function(feature, layer) {
+    const p = feature.properties;
+    layer.bindPopup(`
+      <b>${p.GLG || "–"}</b><br>
+      ${p.UNIT_NAME || ""} <br>
+      <i>${p.AGE || ""}</i>
+    `);
+  }
+});
+
+
+
+
     // Barra de coordenadas UTM
   const coordDiv = L.control({ position: 'bottomleft' });
   coordDiv.onAdd = function () {
@@ -325,6 +393,10 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
    document.getElementById("toggle-norte").addEventListener("change", e => {
     e.target.checked ? map.addLayer(geoUnitsLayer) : map.removeLayer(geoUnitsLayer);
   });
+   document.getElementById("toggle-africa").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(africaGeologyLayer) : map.removeLayer(africaGeologyLayer);
+  });
+
   //  HERRAMIENTA DE CAPTURA DE COORDENADAS
   // ═══════════════════════════════════════════════
 
