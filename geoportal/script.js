@@ -154,6 +154,137 @@ const critMinLayer = L.esri.featureLayer({
       }
     });
 
+// ── COLORES POR EDAD (USGS/FGDC estándar) ──────────────────────────────────
+const ageColors = {
+  // Cenozoico
+  "Holocene":        "#ffff99",
+  "Quaternary":      "#f9f972",
+  "Pleistocene":     "#fff2ae",
+  "Pliocene":        "#ffe569",
+  "Neogene":         "#ffcc66",
+  "Miocene":         "#ffb347",
+  "Oligocene":       "#ff9933",
+  "Eocene":          "#ff8000",
+  "Paleocene":       "#e67300",
+  "Paleogene":       "#e07000",
+  "Tertiary":        "#ffbb66",
+  // Límites
+  "Cretaceous-Tertiary":   "#d4f0a0",
+  "Cretaceous-Paleogene":  "#c8eda0",
+  // Mesozoico
+  "Cretaceous":      "#80e880",
+  "Late Cretaceous": "#66d966",
+  "Early Cretaceous":"#99f099",
+  "Jurassic":        "#00c8a0",
+  "Late Jurassic":   "#00b890",
+  "Middle Jurassic": "#00a882",
+  "Early Jurassic":  "#00d8b0",
+  "Triassic":        "#8fd9b6",
+  "Late Triassic":   "#7dcaa6",
+  "Middle Triassic": "#6cbb96",
+  "Early Triassic":  "#a0e0c0",
+  "Mesozoic":        "#b3f0d9",
+  // Paleozoico
+  "Permian":         "#e8a090",
+  "Pennsylvanian":   "#c8a0d0",
+  "Mississippian":   "#a890d0",
+  "Carboniferous":   "#b898d0",
+  "Devonian":        "#c8b870",
+  "Silurian":        "#b8d890",
+  "Ordovician":      "#00b890",
+  "Cambrian":        "#70c880",
+  "Paleozoic":       "#a0b8e0",
+  // Precámbrico
+  "Neoproterozoic":  "#ff99cc",
+  "Mesoproterozoic": "#ff66aa",
+  "Paleoproterozoic":"#e6007a",
+  "Proterozoic":     "#ff80bb",
+  "Archean":         "#c00060",
+  "Precambrian":     "#d070a0",
+  // Plutónicas/volcánicas sin edad clara
+  "undivided":       "#cccccc",
+};
+
+// ── COLORES POR UNIT_ABBREV (para unidades mixtas tipo KTvm, pQg, etc.) ────
+// Extrae el prefijo de edad del símbolo y lo mapea
+function colorFromAbbrev(abbrev) {
+  if (!abbrev) return null;
+  // Prefijos en orden de mayor a menor especificidad
+  const prefixMap = [
+    ["KPg", "#c8eda0"], ["KT",  "#d4f0a0"],
+    ["pQ",  "#fff2ae"], ["Qh",  "#ffff99"], ["Q",   "#f9f972"],
+    ["pgT", "#e07000"], ["eT",  "#ff8000"], ["oT",  "#ff9933"],
+    ["mT",  "#ffb347"], ["nT",  "#ffcc66"], ["T",   "#ffbb66"],
+    ["Ku",  "#99f099"], ["K",   "#80e880"],
+    ["Ju",  "#00d8b0"], ["J",   "#00c8a0"],
+    ["Tr",  "#8fd9b6"],
+    ["Pu",  "#e8a090"], ["P",   "#e8a090"],
+    ["IP",  "#c8a0d0"],
+    ["M",   "#b898d0"],  // Mississippian
+    ["Du",  "#c8b870"], ["D",   "#c8b870"],
+    ["Su",  "#b8d890"], ["S",   "#b8d890"],
+    ["Ou",  "#00b890"], ["O",   "#00b890"],
+    ["Cm",  "#70c880"],
+    ["Zu",  "#ff99cc"], ["Z",   "#ff99cc"],
+    ["Yu",  "#ff66aa"], ["Y",   "#ff66aa"],
+    ["Xu",  "#e6007a"], ["X",   "#e6007a"],
+    ["Wu",  "#c00060"], ["W",   "#c00060"],
+    ["pZ",  "#d070a0"],
+  ];
+  for (const [prefix, color] of prefixMap) {
+    if (abbrev.startsWith(prefix)) return color;
+  }
+  return null;
+}
+
+// ── FUNCIÓN PRINCIPAL DE COLOR ───────────────────────────────────────────────
+function getFeatureColor(feature) {
+  const p = feature.properties;
+
+  // 1) Intenta por UNIT_ABBREV (más específico)
+  const byAbbrev = colorFromAbbrev(p.UNIT_ABBREV);
+  if (byAbbrev) return byAbbrev;
+
+  // 2) Fallback: MIN_AGE o MAX_AGE
+  const age = p.MIN_AGE || p.MAX_AGE || "";
+  const byAge = ageColors[age];
+  if (byAge) return byAge;
+
+  // 3) Busca substring en MIN_AGE (para valores compuestos)
+  for (const [key, color] of Object.entries(ageColors)) {
+    if (age.includes(key)) return color;
+  }
+
+  // 4) Último recurso: ROCKTYPE-based
+  const rt = (p.ROCKTYPE || "").toLowerCase();
+  if (rt.includes("pluton") || rt.includes("intrusive")) return "#ff6666";
+  if (rt.includes("volcanic"))  return "#ff9966";
+  if (rt.includes("water"))     return "#aad4ff";
+
+  return "#cccccc"; // sin clasificar
+}
+
+// ── LAYER CON ESTILO CORRECTO ────────────────────────────────────────────────
+const geoUnitsLayer = L.esri.featureLayer({
+  url: "https://services.arcgis.com/v01gqwM5QqNysAAi/arcgis/rest/services/Geologic_Map_of_North_America/FeatureServer/27",
+  style: function(feature) {
+    return {
+      color:        "#555",
+      weight:       0.5,
+      fillColor:    getFeatureColor(feature),
+      fillOpacity:  1
+    };
+  },
+  onEachFeature: function(feature, layer) {
+    const p = feature.properties;
+    layer.bindPopup(`
+      <b>${p.UNIT_ABBREV || "–"}</b><br>
+      ${p.ROCKTYPE || ""} — ${p.LITHOLOGY || ""}<br>
+      <i>${p.MIN_AGE || ""}</i>
+    `);
+  }
+});
+
     // Barra de coordenadas UTM
   const coordDiv = L.control({ position: 'bottomleft' });
   coordDiv.onAdd = function () {
@@ -190,6 +321,9 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
   });
   document.getElementById("toggle-petroleo").addEventListener("change", e => {
     e.target.checked ? map.addLayer(critMinLayer) : map.removeLayer(critMinLayer);
+  });
+   document.getElementById("toggle-norte").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(geoUnitsLayer) : map.removeLayer(geoUnitsLayer);
   });
   //  HERRAMIENTA DE CAPTURA DE COORDENADAS
   // ═══════════════════════════════════════════════
