@@ -350,7 +350,17 @@ const africaGeologyLayer = L.esri.featureLayer({
   }
 });
 
-
+// ── GEOLOGÍA SUPERFICIAL DE AUSTRALIA (GA WMS) ──────────────────────────────
+const geologyAustralia = L.tileLayer.wms(
+  "https://services.ga.gov.au/gis/services/GA_Surface_Geology/MapServer/WmsServer?",
+  {
+    layers: 'AUS_GA_2500k_GUPoly_Age', // nombre de la capa según GetCapabilities
+    format: 'image/png',
+    transparent: true,
+    version: '1.3.0',
+    attribution: 'Geoscience Australia · Surface Geology of Australia'
+  }
+);
 
 
     // Barra de coordenadas UTM
@@ -395,6 +405,9 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
   });
    document.getElementById("toggle-africa").addEventListener("change", e => {
     e.target.checked ? map.addLayer(africaGeologyLayer) : map.removeLayer(africaGeologyLayer);
+  });
+     document.getElementById("toggle-australia").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(geologyAustralia) : map.removeLayer(geologyAustralia);
   });
 
   //  HERRAMIENTA DE CAPTURA DE COORDENADAS
