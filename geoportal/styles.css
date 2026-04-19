@@ -99,6 +99,24 @@ height: 100%;
   cursor: pointer;
   border-radius: 4px;
 }
+/* Hover: cambia color y añade sombra */
+#sidebar-toggle:hover {
+  background: #163150;      /* azul oscuro */
+  color: #fff;              /* texto blanco */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transform: scale(1.05);   /* ligero zoom */
+}
+/* Responsive: en pantallas pequeñas */
+@media (max-width: 768px) {
+  #sidebar-toggle {
+    top: auto;           /* quita la posición superior */
+    left: auto;          /* quita la posición izquierda */
+    bottom: 20px;        /* lo coloca abajo */
+    right: 20px;         /* esquina inferior derecha */
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
 
 /* Sidebar */
 #sidebar {
@@ -111,7 +129,34 @@ height: 100%;
   color: #163150;
   padding: 20px;
   transition: left 0.3s ease;
+   box-shadow: 2px 0 6px rgba(0,0,0,0.2);
+  overflow-y: auto;       /* scroll vertical */
+  overflow-x: hidden;     /* evita scroll horizontal */
   z-index: 1000;
+}
+/* Personalización de la barra de scroll (WebKit: Chrome, Edge, Safari) */
+#sidebar::-webkit-scrollbar {
+  width: 10px;            /* ancho de la barra */
+}
+
+#sidebar::-webkit-scrollbar-track {
+  background: #eaeaea;    /* color del track */
+  border-radius: 6px;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  background: #888;       /* color del thumb */
+  border-radius: 6px;
+}
+
+#sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555;       /* color al pasar el mouse */
+}
+
+/* Firefox */
+#sidebar {
+  scrollbar-width: thin;          /* barra delgada */
+  scrollbar-color: #888 #eaeaea;  /* thumb y track */
 }
 
 #sidebar h2 {
@@ -139,6 +184,7 @@ height: 100%;
 #sidebar ul li a:hover {
   text-decoration: underline;
 }
+
 
 /* Sidebar activo */
 #sidebar.active {
@@ -175,22 +221,6 @@ height: 100%;
   border-radius: 4px;
 }
 
-#nota-movil {
-  background: rgba(255, 0, 0, 0.8);
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-}
-
-.hidden {
-  display: none;
-}
 
 /* ══════════════════════════════════════════
 PANEL DE ANÁLISIS — Captura de coordenadas
@@ -578,4 +608,39 @@ body.capturando #mapa-base {
 @keyframes fadeIn {
   from {opacity:0; transform:scale(0.95);}
   to {opacity:1; transform:scale(1);}
+}
+
+.popup {
+  display: none; /* oculto por defecto */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.popup-content h3 {
+  margin-bottom: 12px;
+  color: #163150;
+}
+.popup-content button {
+  margin-top: 12px;
+  background: #163150;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.popup-content button:hover {
+  background: #1f4a80;
 }

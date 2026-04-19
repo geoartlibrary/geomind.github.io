@@ -1,9 +1,22 @@
-// ─── Nota móvil ──────────────────────────────────────────────────────────────
-window.addEventListener("load", () => {
-  const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
-  if (isMobile) document.getElementById("nota-movil").classList.remove("hidden");
-});
+// ─── disclaimer ───────────────────────────────────────────────────────
 
+document.addEventListener("DOMContentLoaded", function() {
+  const popup = document.getElementById("welcome-popup");
+  const closeBtn = document.getElementById("close-popup");
+  const dontShowAgain = document.getElementById("dont-show-again");
+
+  // Mostrar popup solo si no está marcado en localStorage
+  if (!localStorage.getItem("hideWelcomePopup")) {
+    popup.style.display = "flex";
+  }
+
+  closeBtn.addEventListener("click", () => {
+    if (dontShowAgain.checked) {
+      localStorage.setItem("hideWelcomePopup", "true");
+    }
+    popup.style.display = "none";
+  });
+});
 // ─── Navbar hamburguesa ───────────────────────────────────────────────────────
 const toggle = document.getElementById('menu-toggle');
 const menu   = document.getElementById('menu');
@@ -153,6 +166,7 @@ const critMinLayer = L.esri.featureLayer({
         }
       }
     });
+    
 
 // ── COLORES POR EDAD (USGS/FGDC estándar) ──────────────────────────────────
 const ageColors = {
@@ -236,6 +250,8 @@ function colorFromAbbrev(abbrev) {
   }
   return null;
 }
+
+
 
 // ── FUNCIÓN PRINCIPAL DE COLOR ───────────────────────────────────────────────
 function getFeatureColor(feature) {
@@ -361,6 +377,86 @@ const geologyAustralia = L.tileLayer.wms(
     attribution: 'Geoscience Australia · Surface Geology of Australia'
   }
 );
+const geologiaEuropa = L.tileLayer.wms(
+  "https://services.bgr.de/wms/geologie/igme5000/",
+  {
+    layers: '37,39,41,43,44', // capas según tu URL
+    format: 'image/png',
+    styles: 'default,default,default,default,default',
+    transparent: true,
+    version: '1.1.1',
+    attribution: 'BGR · IGME5000 Geología de Europa',
+    crs: L.CRS.EPSG3034 // usa el mismo sistema de referencia
+  }
+);
+// ── LAYER CON ESTILO CORRECTO ────────────────────────────────────────────────
+const geoAsiaLayer = L.esri.featureLayer({
+  url: "https://services.arcgis.com/v01gqwM5QqNysAAi/arcgis/rest/services/South_Asia_Geology/FeatureServer/1",
+  style: function(feature) {
+    return {
+      color:        "#555",
+      weight:       0.5,
+      fillColor:    getAsiaColor(feature),
+      fillOpacity:  1
+    };
+  },
+  onEachFeature: function(feature, layer) {
+    const p = feature.properties;
+    layer.bindPopup(`
+      <b>${p.GLG || "–"}</b><br>
+      ${p.OBJECTID || ""} <br>
+      <i>${p.ROCKTYPE || ""}</i>
+    `);
+  }
+});
+
+// ── COLORES POR SIMBOLO GLG (extraídos del renderer del servicio Asia) ───────
+const asiaColors = {
+  "CO":   "#ffc0cb", // Carboniferous–Ordovician
+  "Cmsm": "#ffbead", // Cambrian sed/met
+  "Cs":   "#d2ccff", // Carboniferous sed
+  "D":    "#a89cd6", // Devonian
+  "H2O":  "#ccdfe3", // Water
+  "I":    "#b0d6eb", // Igneous undivided
+  "JTr":  "#c9e5f2", // Jurassic–Triassic
+  "Mzim": "#e3e3b2", // Mesozoic intrusive/metamorphic
+  "Jms":  "#bad9d1", // Jurassic sed/met
+  "KJs":  "#dae3c3", // Cretaceous–Jurassic sed
+  "Ks":   "#bed9a0", // Cretaceous sed
+  "MzPzi":"#e3e3b2", // Mesozoic–Paleozoic intrusive/met
+  "N":    "#ffffab", // Neogene sed
+  "Osm":  "#ffbee8", // Ordovician sed/met
+  "Pg":   "#f2c7ab", // Paleogene sed
+  "Pr":   "#c2e8ff", // Permian undivided
+  "Pzi":  "#ccbfff", // Paleozoic igneous
+  "Pz":   "#ccbfff", // Paleozoic undivided
+  "Pzl":  "#bebdff", // Lower Paleozoic
+  "Pzu":  "#abcef5", // Upper Paleozoic
+  "Q":    "#ffffd4", // Quaternary
+  "Qs":   "#e3d9a2", // Quaternary sand/dunes
+  "S":    "#c1a8e6", // Silurian
+  "SOc":  "#f2d9ff", // Silurian–Ordovician carbonate
+  "TKim": "#e3e3b2", // Tertiary–Cretaceous ig/met
+  "TKs":  "#f0f0a5", // Tertiary–Cretaceous sed
+  "TKv":  "#f5ca7a", // Paleocene–Cretaceous extrusive
+  "Ti":   "#e3e3b2", // Tertiary igneous
+  "TrCs": "#c3d3db", // Triassic–Carboniferous sed
+  "TrPr": "#ffffff", // Triassic–Permian
+  "Trms": "#badfff", // Triassic sed/met
+  "Ts":   "#f5d3c1", // Tertiary sed
+  "Tv":   "#f5ca7a", // Tertiary extrusive
+  "pC":   "#c4ab78"  // Precambrian
+};
+
+// ── FUNCIÓN DE COLOR ───────────────────────────────────────────────
+function getAsiaColor(feature) {
+  const symbol = feature.properties.GLG;
+  return asiaColors[symbol] || "#cccccc";
+}
+
+
+  
+
 
 
     // Barra de coordenadas UTM
@@ -409,6 +505,15 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
      document.getElementById("toggle-australia").addEventListener("change", e => {
     e.target.checked ? map.addLayer(geologyAustralia) : map.removeLayer(geologyAustralia);
   });
+       document.getElementById("toggle-europa").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(geologiaEuropa) : map.removeLayer(geologiaEuropa);
+  });
+         document.getElementById("toggle-asia").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(geoAsiaLayer) : map.removeLayer(geoAsiaLayer);
+  });
+
+
+
 
   //  HERRAMIENTA DE CAPTURA DE COORDENADAS
   // ═══════════════════════════════════════════════

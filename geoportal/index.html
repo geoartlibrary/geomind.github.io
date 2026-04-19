@@ -47,16 +47,18 @@
        ═══════════════════════════════════════════ -->
     ☰
   </a> </li> </ul>
-        <ul> <li> <label> <input type="checkbox" id="toggle-petroleo"> Minerales criticos </label> 
-  </a> </li> </ul>
-        <ul> <li> <label> <input type="checkbox" id="toggle-hidrologia"> Volcanes </label> 
-  </a> </li> </ul>
+
    <ul> <li> <label> <input type="checkbox" id="toggle-norte"> GEO. Norteamérica </label> <a target="_blank" href="https://pubs.usgs.gov/ds/424/ds424_map_units.pdf"> ☰ 
   </a> </li> </ul>
     <ul> <li> <label> <input type="checkbox" id="toggle-africa"> GEO. África </label> <a target="_blank" href="https://pubs.usgs.gov/of/1997/ofr-97-470/OF97-470A/ofr97470A_sheet2_plotter.pdf"> ☰ 
   </a> </li> </ul>
      <ul> <li> <label> <input type="checkbox" id="toggle-australia"> GEO. Australia </label> <a href="#" data-layer= "Geología Australia" class="legend-link" data-legend="WORLD/leyenda2.png"> ☰ 
   </a> </li> </ul>
+    <ul> <li> <label> <input type="checkbox" id="toggle-europa"> GEO. Europa </label> <a href="#" data-layer= "Geología Europa" class="legend-link" data-legend="WORLD/leyenda3.png"> ☰ 
+  </a> </li> </ul>
+      <ul> <li> <label> <input type="checkbox" id="toggle-asia"> GEO. Asia </label> <a href="#" data-layer= "Geología Asia" class="legend-link" data-legend="WORLD/leyenda4.png"> ☰ 
+  </a> </li> </ul>
+
 
 
     </ul>
@@ -65,7 +67,10 @@
 <li class="section-title">
   <button class="accordion-btn">Datos</button>
   <ul class="accordion-content">
-    <li>No hay datos disponibles</li>
+        <ul> <li> <label> <input type="checkbox" id="toggle-petroleo"> Minerales criticos </label> 
+  </a> </li> </ul>
+        <ul> <li> <label> <input type="checkbox" id="toggle-hidrologia"> Volcanes </label> 
+  </a> </li> </ul>
   </ul>
 </li>
 
@@ -220,7 +225,23 @@
      <div id="mapa-base"></div>
    </main>
 
-<div id="nota-movil" class="hidden"> ⚠️ Este GEOPORTAL está diseñado para PC, no para celular. </div>
+<!-- Popup -->
+<div id="welcome-popup" class="popup">
+  <div class="popup-content">
+    <h3>Bienvenido a Mindportal</h3>
+    <p>Este portal no aloja directamente las capas ni los polígonos presentados. La información mostrada proviene de servicios externos en formato WMS y JSON, recopilados con el único propósito de facilitar la visualización y el acceso a datos geocientíficos.
+
+Todas las capas, materiales y contenidos son propiedad de sus respectivos autores o entidades, y se encuentran debidamente referenciados. Este sitio tiene fines exclusivamente informativos y educativos.
+
+En el futuro, el portal se actualizará con información de nuestra autoría. Agradecemos cualquier recomendación o sugerencia que desees compartir a través de nuestras redes sociales oficiales.</p>
+    
+    <label>
+      <input type="checkbox" id="dont-show-again">
+      No mostrar de nuevo
+    </label>
+    
+    <button id="close-popup">Cerrar</button>
+  </div>
 
    <!-- JS de Leaflet -->
    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
