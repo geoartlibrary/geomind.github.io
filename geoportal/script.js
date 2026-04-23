@@ -115,7 +115,10 @@ const volcanes = L.esri.featureLayer({
             "<b>Volcán:</b> " + feature.properties.Volcano_Name + "<br>" +
             "<b>País:</b> " + feature.properties.Country + "<br>" +
             "<b>Lat:</b> " + feature.properties.Latitude + "<br>" +
-            "<b>Lon:</b> " + feature.properties.Longitude
+            "<b>Lon:</b> " + feature.properties.Longitude+ "<br>" +
+            "<b>Rock:</b> " + feature.properties.Dominant_Rock_Type+ "<br>" +
+             "<b> Info </b> " + feature.properties.URL+ "<br>" +
+             "<b> Última erup </b> " + feature.properties.Last_Known_Eruption 
           );
         }
       }
@@ -159,9 +162,9 @@ const critMinLayer = L.esri.featureLayer({
         if (feature.properties) {
           layer.bindPopup(
             "<b>" + (feature.properties.DEPOSIT_NAME || "Sin nombre") + "</b><br>" +
-            "Mineral: " + (feature.properties.CRITICAL_MINERAL || "N/A") + "<br>" +
-            "Tipo: " + (feature.properties.DEPOSIT_TYPE || "N/A") + "<br>" +
-            "Ubicación: " + (feature.properties.LOCATION || "")
+            "<b> Mineral: </b> " + (feature.properties.CRITICAL_MINERAL || "N/A") + "<br>" +
+            " <b>Tipo: </b> " + (feature.properties.DEPOSIT_TYPE || "N/A") + "<br>" +
+            "  <b> Ubicación:</b> " + (feature.properties.LOC_DETAIL || "N/A")
           );
         }
       }
@@ -454,8 +457,74 @@ function getAsiaColor(feature) {
   return asiaColors[symbol] || "#cccccc";
 }
 
-
-  
+const cobre = L.esri.featureLayer({
+  url: "https://services1.arcgis.com/4ezfu5dIwH83BUNL/arcgis/rest/services/Copper_Porphry_Deposits/FeatureServer/0",
+  pointToLayer: function (geojson, latlng) {
+    return L.circleMarker(latlng, {
+      radius: 5,
+      fillColor: "#ff7800",
+      color: "#000",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.bindPopup(
+        "<b>" + (feature.properties.NameDeposi || "Sin nombre") + "</b><br>" +
+        "Edad: " + (feature.properties.AgeMY || "N/A") + "Ma"+ "<br>" +
+        "Tipo de roca: " + (feature.properties.RocksInDep || "N/A") + "<br>" +
+        "%Cu: " + (feature.properties.Copper_gra|| "N/A") + "%"
+      );
+    }
+  }
+});
+const wdpa = L.esri.featureLayer({
+  url: "https://services5.arcgis.com/Mj0hjvkNtV7NRhA7/arcgis/rest/services/WDPA_v0/FeatureServer/1",
+  style: function () {
+    return {
+      color: "#6e6e6e",
+      weight: 1,
+      fillColor: "green",
+      fillOpacity: 0.6
+    };
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.bindPopup(
+        "<b>" + (feature.properties.name || "Sin nombre") + "</b><br>" +
+        "Designación: " + (feature.properties.desig_eng || "N/A") + "<br>" +
+        "Categoría IUCN: " + (feature.properties.iucn_cat || "N/A") + "<br>" +
+        "Área reportada (km²): " + (feature.properties.rep_area || "N/A")
+      );
+    }
+  }
+});
+const powerPlants = L.esri.featureLayer({
+  url: "https://services.arcgis.com/AgwDJMQH12AGieWa/ArcGIS/rest/services/global_power_plant_database_June_2018/FeatureServer/1",
+  pointToLayer: function (geojson, latlng) {
+    return L.circleMarker(latlng, {
+      radius: 6,
+      fillColor: "#aaaaaa", // color por defecto
+      color: "red",
+      weight: 0.5,
+      opacity: 1,
+      fillOpacity: 0.8
+    });
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      layer.bindPopup(
+        "<b>" + (feature.properties.name || "Sin nombre") + "</b><br>" +
+        "País: " + (feature.properties.country_long || "N/A") + "<br>" +
+        "Combustible: " + (feature.properties.fuel1 || "N/A") + "<br>" +
+        "Capacidad: " + (feature.properties.capacity_mw || "N/A") + " MW<br>" +
+        "Año de comisión: " + (feature.properties.commissioning_year || "N/A")
+      );
+    }
+  }
+});
 
 
 
@@ -510,6 +579,15 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
   });
          document.getElementById("toggle-asia").addEventListener("change", e => {
     e.target.checked ? map.addLayer(geoAsiaLayer) : map.removeLayer(geoAsiaLayer);
+  });
+           document.getElementById("toggle-cobre").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(cobre) : map.removeLayer(cobre);
+  });
+          document.getElementById("toggle-bosques").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(wdpa) : map.removeLayer(wdpa);
+  });
+            document.getElementById("toggle-energia").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(powerPlants) : map.removeLayer(powerPlants);
   });
 
 
