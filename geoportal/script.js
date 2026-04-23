@@ -151,7 +151,7 @@ const critMinLayer = L.esri.featureLayer({
       pointToLayer: function (geojson, latlng) {
         return L.circleMarker(latlng, {
           radius: 5,
-          fillColor: "#ff7800",
+          fillColor: "yellow",
           color: "#000",
           weight: 1,
           opacity: 1,
