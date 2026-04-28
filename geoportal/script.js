@@ -566,7 +566,7 @@ fetch(url)
         // Ejemplo simplificado: mostrar el XML crudo
         L.popup()
           .setLatLng(e.latlng)
-          .setContent("<pre>" + data + "</pre>")
+          .setContent("<b> INFO </b>" + data )
           .openOn(map);
       });
   });
