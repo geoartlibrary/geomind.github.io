@@ -526,6 +526,82 @@ const powerPlants = L.esri.featureLayer({
   }
 });
 
+// Capa WMS de depósitos VMS
+const vmsDeposits = L.tileLayer.wms("https://mrdata.usgs.gov/services/vms?", {
+  layers: "vms",
+  format: "image/png",
+  transparent: true,
+  version: "1.3.0",
+  attribution: "USGS · VMS Deposits"
+});
+
+// Estado del botón (checkbox)
+const toggleVMS = document.getElementById("toggle-vms");
+
+// Encender/apagar la capa
+toggleVMS.addEventListener("change", e => {
+  if (e.target.checked) {
+    map.addLayer(vmsDeposits);
+  } else {
+    map.removeLayer(vmsDeposits);
+  }
+});
+
+// Función para manejar GetFeatureInfo al hacer clic
+map.on("click", function(e) {
+  // Solo ejecuta si la capa está encendida
+  if (!toggleVMS.checked) return;
+
+  const url = getFeatureInfoUrl(
+    map,
+    vmsDeposits,
+    e.latlng,
+    { info_format: "application/vnd.ogc.gml" }
+  );
+
+fetch(url)
+      .then(response => response.text())
+      .then(data => {
+        // Aquí parseas el XML/GML devuelto para extraer atributos
+        // Ejemplo simplificado: mostrar el XML crudo
+        L.popup()
+          .setLatLng(e.latlng)
+          .setContent("<pre>" + data + "</pre>")
+          .openOn(map);
+      });
+  });
+
+// Helper para construir la URL de GetFeatureInfo
+  function getFeatureInfoUrl(map, layer, latlng, params) {
+    const point = map.latLngToContainerPoint(latlng, map.getZoom());
+    const size = map.getSize();
+
+    const baseParams = {
+      request: "GetFeatureInfo",
+      service: "WMS",
+      srs: "EPSG:4326",
+      styles: "",
+      version: "1.1.1",
+      format: "image/png",
+      bbox: map.getBounds().toBBoxString(),
+      height: size.y,
+      width: size.x,
+      layers: "vms",
+      query_layers: "vms",
+      info_format: "text/html",
+      x: Math.floor(point.x),
+      y: Math.floor(point.y)
+    };
+
+    const url = layer._url + L.Util.getParamString(
+      Object.assign({}, baseParams, params),
+      layer._url,
+      true
+    );
+
+    return url;
+  }
+
 
 
     // Barra de coordenadas UTM
@@ -552,6 +628,8 @@ const powerPlants = L.esri.featureLayer({
       coordDiv.update(`<b>UTM ${u.zone}${u.hemisphere}</b><br>E: ${u.easting} m<br>N: ${u.northing} m`);
     } catch (_) {}
   });
+
+  
 
   document.getElementById("toggle-hidrologia").addEventListener("change", e => {
     e.target.checked ? map.addLayer(volcanes) : map.removeLayer(volcanes);
@@ -589,7 +667,9 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
             document.getElementById("toggle-energia").addEventListener("change", e => {
     e.target.checked ? map.addLayer(powerPlants) : map.removeLayer(powerPlants);
   });
-
+           document.getElementById("toggle-vms").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(vmsDeposits) : map.removeLayer(vmsDeposits);
+  });
 
 
 
