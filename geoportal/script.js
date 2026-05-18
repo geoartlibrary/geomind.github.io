@@ -1058,3 +1058,25 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
   });
 
 }); // fin DOMContentLoaded
+
+// Selección del nuevo botón "Comenzar"
+const btnSidebarToggle = document.getElementById("sidebar-toggle");
+
+// Guardamos la animación en una variable
+let animacionSidebar = gsap.fromTo(btnSidebarToggle, 
+  { scale: 1, boxShadow: "0 0 10px #163150" }, 
+  { 
+    scale: 1.05, 
+    boxShadow: "0 0 20px #b17c44", 
+    duration: 0.8, 
+    repeat: -1, 
+    yoyo: true, 
+    ease: "power1.inOut" 
+  }
+);
+
+// Al primer clic, detenemos la animación
+btnSidebarToggle.addEventListener("click", () => {
+  animacionSidebar.kill(); // elimina la animación
+  gsap.set(btnSidebarToggle, { scale: 1, boxShadow: "none" }); // resetea estilo
+});
