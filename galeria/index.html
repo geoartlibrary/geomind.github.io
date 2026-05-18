@@ -35,27 +35,7 @@
     </nav>
   </header>
 
-<div id="paypal-button-container-P-81P8876692490414XNIFZGQA"></div>
-<script src="https://www.paypal.com/sdk/js?client-id=AZ18HMeuTqsmN0bGQEmKe2LoPrGXYuWppw9yE83JLkoCNsb7fK_qMlOA9t8HzAlZu1lwT8Px4dnt7qfN&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-<script>
-  paypal.Buttons({
-      style: {
-          shape: 'rect',
-          color: 'blue',
-          layout: 'vertical',
-          label: 'subscribe'
-      },
-      createSubscription: function(data, actions) {
-        return actions.subscription.create({
-          /* Creates the subscription */
-          plan_id: 'P-81P8876692490414XNIFZGQA'
-        });
-      },
-      onApprove: function(data, actions) {
-        alert(data.subscriptionID); // You can add optional success message for the subscriber here
-      }
-  }).render('#paypal-button-container-P-81P8876692490414XNIFZGQA'); // Renders the PayPal button
-</script>
+
   
 <section class="galeria">
   <h2 class="galeria-titulo">Galería</h2>
