@@ -602,6 +602,84 @@ fetch(url)
     return url;
   }
 
+  // Capa de Reservas de gas y petróleo
+  const reservasGasPetroleo = L.esri.featureLayer({
+    url: "https://services4.arcgis.com/bFQCiZqoe0LrqfWM/arcgis/rest/services/Reservas_de_gas_y_petróleo/FeatureServer/0",
+    style: function () {
+      return {
+        color: "#0070FF",
+        weight: 1.5,
+        fillColor: "#0070FF",
+        fillOpacity: 0.75
+      };
+    },
+  });
+
+  let pbdbLayer  = null;
+let pbdbActive = false;
+
+function loadPBDB() {
+  if (!pbdbActive || map.getZoom() < 4) return;
+  if (pbdbLayer) { map.removeLayer(pbdbLayer); pbdbLayer = null; }
+
+  const b = map.getBounds();
+
+  // ✅ Formato correcto: .json (NO .geojson)
+  const url = `https://paleobiodb.org/data1.2/colls/list.json`
+            + `?lngmin=${b.getWest().toFixed(4)}&lngmax=${b.getEast().toFixed(4)}`
+            + `&latmin=${b.getSouth().toFixed(4)}&latmax=${b.getNorth().toFixed(4)}`
+            + `&show=ref,time&limit=500`;
+
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      if (!pbdbActive) return;
+      if (!data.records || data.records.length === 0) return;
+
+      // Convertir manualmente a GeoJSON (PBDB no devuelve GeoJSON nativo)
+      const geojson = {
+        type: "FeatureCollection",
+        features: data.records
+          .filter(rec => rec.lng != null && rec.lat != null)
+          .map(rec => ({
+            type: "Feature",
+            geometry: { type: "Point", coordinates: [rec.lng, rec.lat] },
+            properties: rec
+          }))
+      };
+
+      pbdbLayer = L.geoJSON(geojson, {
+        pointToLayer: (f, latlng) => L.circleMarker(latlng, {
+          radius:      5,
+          fillColor:   "#d4a017",
+          color:       "#5a3e00",
+          weight:      1,
+          fillOpacity: 0.85
+        }),
+        onEachFeature: (f, layer) => {
+          const p = f.properties;
+          // Campos reales del API PBDB (.json vocab)
+          const id = p.oid ? p.oid.replace("col:", "") : "–";
+          layer.bindPopup(`
+            <b>${p.nam || "Sin nombre"}</b><br>
+            <b>Edad:</b> ${p.oei || "–"} – ${p.oli || "–"}<br>
+            <b>Ocurrencias:</b> ${p.noc || "–"}<br>
+            <b>Referencia:</b> ${p.ref || "–"}<br>
+            <a href="https://paleobiodb.org/classic/displayCollResults?collection_no=col:${id}"
+               target="_blank">Ver en PBDB ↗</a>
+          `);
+        }
+      }).addTo(map);
+    })
+    .catch(err => console.warn("PBDB error:", err));
+}
+
+map.on("moveend", loadPBDB);
+
+document.getElementById("toggle-fosil").addEventListener("change", e => {
+  pbdbActive = e.target.checked;
+  pbdbActive ? loadPBDB() : (pbdbLayer && map.removeLayer(pbdbLayer), pbdbLayer = null);
+});
 
 
     // Barra de coordenadas UTM
@@ -640,7 +718,7 @@ document.getElementById("toggle-geologia").addEventListener("change", e => {
 document.getElementById("toggle-geologiasub").addEventListener("change", e => {
     e.target.checked ? map.addLayer(geologysudamerica) : map.removeLayer(geologysudamerica);
   });
-  document.getElementById("toggle-petroleo").addEventListener("change", e => {
+  document.getElementById("toggle-critico").addEventListener("change", e => {
     e.target.checked ? map.addLayer(critMinLayer) : map.removeLayer(critMinLayer);
   });
    document.getElementById("toggle-norte").addEventListener("change", e => {
@@ -670,9 +748,10 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
            document.getElementById("toggle-vms").addEventListener("change", e => {
     e.target.checked ? map.addLayer(vmsDeposits) : map.removeLayer(vmsDeposits);
   });
-
-
-
+          document.getElementById("toggle-petroleo").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(reservasGasPetroleo) : map.removeLayer(reservasGasPetroleo);
+  });
+ 
   //  HERRAMIENTA DE CAPTURA DE COORDENADAS
   // ═══════════════════════════════════════════════
 
