@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     center: [-1.8312, -78.1834],
     zoom: 7,
     minZoom: 5,
-    maxZoom: 18,
+    maxZoom: 20,
     zoomControl: false,
     doubleClickZoom: false   // CRÍTICO: evita que dblclick consuma clics simples
   });
