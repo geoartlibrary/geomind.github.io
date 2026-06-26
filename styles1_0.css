@@ -99,10 +99,6 @@ body {
   transition: background-image 0.8s ease-in-out;
 }
 
-.hero-content h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;s
-}
 
 .hero-content p {
   font-size: 1.2em;
@@ -411,4 +407,67 @@ body {
   text-align: center;
   padding: 15px;
   margin-top: 40px;
+}
+
+.scramble-section {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  text-align: center;
+  padding: 80px 20px;
+  margin-top: 50px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.scramble-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00d9ff;
+}
+
+.scramble-section p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.scramble-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+/* Clase aplicada por GSAP */
+.myClass {
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+.revista-section {
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+  text-align: center;
+  padding: 80px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  color: #fff;
+}
+
+.revista-section svg {
+  margin-bottom: 20px;
+}
+
+.revista-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }

@@ -76,3 +76,66 @@ dots.forEach((dot, i) => {
 // Mostrar la primera sección al cargar
 showContent(index);
 
+gsap.registerPlugin(ScrollTrigger);
+
+// Animación en el título
+gsap.to("#scramble-heading", {
+  duration: 1.5,
+  scrambleText: "Soluciones personalizadas de otro nivel",
+  scrollTrigger: {
+    trigger: "#scramble-demo",
+    start: "top 80%",
+    toggleActions: "play none none none"
+  }
+});
+
+// Lista de servicios con sus imágenes
+const servicios = [
+  { texto: "Informes de intercomparación de resultados", img: "IMAGENES/ilus.png" },
+  { texto: "Mapeo geológico multiescala", img: "IMAGENES/geoconnect.png" },
+  { texto: "Asesorias personalizadas ", img: "IMAGENES/logo.png" },
+  { texto: "Cursos personalizados", img: "IMAGENES/muestreo.png" },
+];
+
+// Timeline que recorre todos los servicios y se repite
+ScrollTrigger.create({
+  trigger: "#scramble-demo",
+  start: "top 80%",
+  onEnter: () => {
+    const tl = gsap.timeline({ repeat: -1 }); // repeat infinito
+
+    servicios.forEach((servicio) => {
+      tl.to("#scramble-paragraph", {
+        duration: 2,
+        scrambleText: {
+          text: servicio.texto,
+          chars: "XO",
+          revealDelay: 0.5,
+          speed: 0.3,
+          newClass: "myClass"
+        },
+        onStart: () => {
+          const imgElement = document.getElementById("service-image");
+          imgElement.style.opacity = 0;
+          imgElement.src = servicio.img;
+          setTimeout(() => {
+            imgElement.style.opacity = 1;
+          }, 300);
+        }
+      }).to({}, { duration: 1 }); // pequeña pausa entre servicios
+    });
+  }
+});
+
+ScrollTrigger.create({
+  trigger: "#revista",
+  start: "top 80%",
+  once: true,
+  onEnter: () => {
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+
+    tl.to("#icon-shape", { duration: 1.2, morphSVG: "#eye" })
+      .to("#icon-shape", { duration: 1.2, morphSVG: "#check", delay: 0.8 })
+      .to("#icon-shape", { duration: 1.2, morphSVG: "#icon-shape", delay: 0.8 });
+  }
+});

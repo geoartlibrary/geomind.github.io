@@ -23,9 +23,10 @@
     </div>
       <ul class="menu" id="menu">
         <li><a href="#top">Inicio</a></li>
-        <li><a href="/nosotros/">Nosotros</a></li>
+        <li><a href="/nosotrosd/">Nosotros</a></li>
         <li><a href="/galeria/">Galería</a></li>
         <li><a href="/equipod/">Equipo</a></li>
+        <li><a href="/geoportal/">Geoportal</a></li>
         <li><a href="#contacto">Contactos</a></li>
         
       </ul>
@@ -36,13 +37,13 @@
     <div class="hero-content active" data-bg="IMAGENES/fondo3.jpg">
       <h1>Problemas locales, soluciones globales</h1>
       <p>Todos los servicios para encontrar la solución a tus proyectos</p>
-      <a href="#ser" class="btn">Nuestros serviciós</a>
+      <a href="#scramble-heading" class="btn">Nuestros serviciós</a>
     </div>
 
     <div class="hero-content" data-bg="IMAGENES/geoconnect.png">
       <h1>Geomind Connect</h1>
       <p> Un conversatorio para conocer mas acerca de a nuestros colegas, colaboradores y personas que estan cambiando el mundo.</p>
-      <a href="https://www.facebook.com/geomidconnect/" class="btn">Conocer</a>
+      <a href="#revista" class="btn">Conocer</a>
     </div>
 
     <div class="hero-content" data-bg="IMAGENES/ilus.png">
@@ -79,51 +80,59 @@
     <path d="M16 0C7.163 0 0 7.163 0 16c0 2.828.735 5.49 2.126 7.857L0 32l8.39-2.19A15.9 15.9 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29c-2.52 0-4.96-.66-7.11-1.91l-.51-.3-4.97 1.3 1.33-4.86-.33-.5A12.9 12.9 0 0 1 3 16c0-7.18 5.82-13 13-13s13 5.82 13 13-5.82 13-13 13zm7.19-9.41c-.39-.2-2.31-1.14-2.67-1.27-.36-.13-.62-.2-.88.2-.26.39-1.01 1.27-1.24 1.53-.23.26-.46.29-.85.1-.39-.2-1.65-.61-3.14-1.94-1.16-1.03-1.94-2.3-2.17-2.69-.23-.39-.02-.6.17-.79.18-.18.39-.46.59-.69.2-.23.26-.39.39-.65.13-.26.07-.49-.03-.69-.1-.2-.88-2.12-1.21-2.9-.32-.77-.65-.67-.88-.68h-.75c-.26 0-.69.1-1.05.49-.36.39-1.38 1.35-1.38 3.29s1.42 3.82 1.62 4.08c.2.26 2.8 4.27 6.77 5.99.95.41 1.69.65 2.27.83.95.3 1.82.26 2.51.16.77-.12 2.31-.94 2.64-1.85.33-.91.33-1.69.23-1.85-.1-.16-.36-.26-.75-.46z"/>
   </svg>
 </a>
+
+<section id="scramble-demo" class="scramble-section">
+  <h2 id="scramble-heading"></h2>
+  <p id="scramble-paragraph"></p>
+  <!-- Contenedor para la imagen dinámica -->
+  <div class="scramble-image">
+    <img id="service-image" src="" alt="Imagen de servicio" />
+  </div>
+</section>
+
+<section id="revista" class="revista-section">
+  <svg id="icon-svg" viewBox="0 0 100 100" width="200" height="200">
+
+    <!-- CÁMARA: shape inicial (fill con hueco de lente) -->
+    <path id="icon-shape" fill-rule="evenodd" fill="#00d9ff"
+           d="M50,8 C28,8 14,24 14,42 C14,57 23,67 32,74
+         L32,80 Q32,84 36,84 L64,84 Q68,84 68,80 L68,74
+         C77,67 86,57 86,42 C86,24 72,8 50,8 Z
+         M42,88 L58,88 Q60,96 56,97 L44,97 Q40,96 42,88 Z"/>
+
+    <!-- OJO: contorno + pupila como path único -->
+    <path id="eye" fill-rule="evenodd" fill="#00d9ff" opacity="0"
+      d="M50,20 C20,20 2,50 2,50 C2,50 20,80 50,80 C80,80 98,50 98,50 C98,50 80,20 50,20 Z
+         M50,38 A12,12 0 1,0 50.001,38 Z"/>
+
+    <!-- CHECK: como path stroke (MorphSVG lo maneja bien así) -->
+    <path id="check" fill="none" stroke="#00d9ff" stroke-width="10"
+      stroke-linecap="round" stroke-linejoin="round" opacity="0"
+      d="M88,50 L18,18 L32,48 L18,82 Z
+         M32,50 L32,72 L46,60 Z"/>
+
+  </svg>
+  <h2 class="revista-text">MEDIO DIGITAL DE DIVULGACIÓN CIENTÍFICA </h2>
+    <h1 class="revista-text">Contacta con nosotros para resaltar tu congreso, seminario y simposions científicos a todo el mundo</h1>
+</section>
+
+
   <!-- Servicios -->
   <section id="ser" class="servicios">
-    <h2>Nuestros Servicios</h2>
+    <h2>Nuestras Capacitaciones</h2>
     <div class="servicios-grid">
-      <div class="servicio">
-        <a href="servicio1.html">
-          <img src="IMAGENES/laminas delgadas.PNG" alt="Servicio 1">
-          <p>Estudios Geológicos</p>
-        </a>
-      </div>
-      <div class="servicio">
-        <a href="servicio2.html">
-          <img src="IMAGENES/muestreo.PNG" alt="Servicio 2">
-          <p>Estudios Geotécnicos</p>
-        </a>
-      </div>
-      <div class="servicio">
-        <a href="servicio3.html">
-          <img src="IMAGENES/laminas delgadas.PNG" alt="Servicio 3">
-          <p>Informes petrograficos</p>
-        </a>
-      </div>
-        <!-- Servicio 4 -->
-    <div class="servicio">
-      <a href="servicio4.html">
-        <img src="IMAGENES/muestreo.PNG" alt="Servicio 4">
-        <p>Cartografía Digital</p>
-      </a>
-    </div>
-    <!-- Servicio 5 -->
-    <div class="servicio">
-      <a href="servicio5.html">
-        <img src="IMAGENES/muestreo.PNG" alt="Servicio 5">
-        <p>Muestreo y logeo </p>
-      </a>
-    </div>
+
     <!-- Servicio 6 -->
     <div class="servicio">
       <a href="servicio6.html">
-        <img src="IMAGENES/modelamiento.PNG" alt="Servicio 6">
-        <p>Mdelamiento geologico</p>
+        <img src="IMAGENES/mine.jpg" alt="Servicio 6">
+        <p>Mineralogia aplicada</p>
       </a>
     </div>
   </div>
 </section>
+
+
 
   <!-- Contacto -->
  <section id="contacto" class="contacto">
@@ -168,6 +177,12 @@
 
 </section>
 
+
+<!-- Scripts GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/ScrambleTextPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/MorphSVGPlugin.min.js"></script>
 
 
   <!-- el scrip va al final  -->

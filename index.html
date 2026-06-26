@@ -3,30 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GEOMIND</title>
+  <title>Geomind global solutions | Soluciones dentro de la ciencias de la tierra </title>
   <link rel="icon" href="IMAGENES/logo2.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="proximamente.css">
-  
-  <title>Geomind Global Solutions | Geología y Minería Sustentable</title>
-
-  <!-- Palabras clave -->
-  <meta name="keywords" content="geología, minería sustentable, exploración geológica, estudios geotécnicos, consultoría minera, geomind global solutions, México, Latinoamérica">
-
-  <!-- Resumen para Google -->
-  <meta name="description" content="Geomind Global Solutions ofrece servicios de geología y minería sustentable en México y Latinoamérica. Expertos en exploración geológica, estudios geotécnicos y consultoría minera.">
-
-
-
+  <link rel="stylesheet" href="styles1_0.css">
 </head>
 <body>
   <!-- Header con logo y menú -->
-
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index1_0.html">
+        <img src="IMAGENES/logo.png" alt="Logo de la empresa">
+        </a>
+      </div>
+      <!-- Botón hamburguesa -->
+    <div class="menu-toggle" id="menu-toggle">
+      ☰
+    </div>
+      <ul class="menu" id="menu">
+        <li><a href="#top">Inicio</a></li>
+        <li><a href="/nosotrosd/">Nosotros</a></li>
+        <li><a href="/galeria/">Galería</a></li>
+        <li><a href="/equipod/">Equipo</a></li>
+        <li><a href="/geoportal/">Geoportal</a></li>
+        <li><a href="#contacto">Contactos</a></li>
+        
+      </ul>
+    </nav>
+  </header>
   <section class="hero">
   <div class="carousel">
-          <a href="">
-          <img src="IMAGENES/proximamente.jpeg" alt="Servicio 1">
-        </a>
+    <div class="hero-content active" data-bg="IMAGENES/fondo3.jpg">
+      <h1>Problemas locales, soluciones globales</h1>
+      <p>Todos los servicios para encontrar la solución a tus proyectos</p>
+      <a href="#scramble-heading" class="btn">Nuestros serviciós</a>
+    </div>
+
+    <div class="hero-content" data-bg="IMAGENES/geoconnect.png">
+      <h1>Geomind Connect</h1>
+      <p> Un conversatorio para conocer mas acerca de a nuestros colegas, colaboradores y personas que estan cambiando el mundo.</p>
+      <a href="#revista" class="btn">Conocer</a>
+    </div>
+
+    <div class="hero-content" data-bg="IMAGENES/ilus.png">
+      <h1>Ilustración geológica</h1>
+      <p>Una forma dinámica de aprender</p>
+      <a href="/galeria/" class="btn">Galería</a>
+    </div>
+
+    <div class="hero-content" data-bg="IMAGENES/fondo4.jpg">
+      <h1>Consultoría especializada</h1>
+      <p>Asesoría técnica para tu empresa</p>
+      <a href="mailto:geomindsolutions@gmail.com" class="btn">Solicitar información</a>
+    </div>
   </div>
 
   <div class="indicators">
@@ -51,22 +81,112 @@
   </svg>
 </a>
 
-<div class="bottom-link">
-  <a href="index1_0.html">Ir</a>
+<section id="scramble-demo" class="scramble-section">
+  <h2 id="scramble-heading"></h2>
+  <p id="scramble-paragraph"></p>
+  <!-- Contenedor para la imagen dinámica -->
+  <div class="scramble-image">
+    <img id="service-image" src="" alt="Imagen de servicio" />
+  </div>
+</section>
+
+<section id="revista" class="revista-section">
+  <svg id="icon-svg" viewBox="0 0 100 100" width="200" height="200">
+
+    <!-- CÁMARA: shape inicial (fill con hueco de lente) -->
+    <path id="icon-shape" fill-rule="evenodd" fill="#00d9ff"
+           d="M50,8 C28,8 14,24 14,42 C14,57 23,67 32,74
+         L32,80 Q32,84 36,84 L64,84 Q68,84 68,80 L68,74
+         C77,67 86,57 86,42 C86,24 72,8 50,8 Z
+         M42,88 L58,88 Q60,96 56,97 L44,97 Q40,96 42,88 Z"/>
+
+    <!-- OJO: contorno + pupila como path único -->
+    <path id="eye" fill-rule="evenodd" fill="#00d9ff" opacity="0"
+      d="M50,20 C20,20 2,50 2,50 C2,50 20,80 50,80 C80,80 98,50 98,50 C98,50 80,20 50,20 Z
+         M50,38 A12,12 0 1,0 50.001,38 Z"/>
+
+    <!-- CHECK: como path stroke (MorphSVG lo maneja bien así) -->
+    <path id="check" fill="none" stroke="#00d9ff" stroke-width="10"
+      stroke-linecap="round" stroke-linejoin="round" opacity="0"
+      d="M88,50 L18,18 L32,48 L18,82 Z
+         M32,50 L32,72 L46,60 Z"/>
+
+  </svg>
+  <h2 class="revista-text">MEDIO DIGITAL DE DIVULGACIÓN CIENTÍFICA </h2>
+    <h1 class="revista-text">Contacta con nosotros para resaltar tu congreso, seminario y simposions científicos a todo el mundo</h1>
+</section>
+
+
+  <!-- Servicios -->
+  <section id="ser" class="servicios">
+    <h2>Nuestras Capacitaciones</h2>
+    <div class="servicios-grid">
+
+    <!-- Servicio 6 -->
+    <div class="servicio">
+      <a href="servicio6.html">
+        <img src="IMAGENES/mine.jpg" alt="Servicio 6">
+        <p>Mineralogia aplicada</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Contacto -->
+ <section id="contacto" class="contacto">
+  <h2>Contáctanos</h2>
+  <p>Ecuador: <a href="tel:+593983098197">+593 983 098 197</a> 
+  <p>Email: <a href="mailto:geomindsolutions@gmail.com">geomindsolutions@gmail.com</a></p>
+<div class="social-contact">
+  <!-- Facebook -->
+  <a target="_blank" href="https://www.facebook.com/geoartlibrery/" 
+     class="icon" id="facebook-link">
+    <i class="fab fa-facebook"></i>
+  </a>
+
+  <!-- Instagram -->
+  <a target="_blank" href="https://www.instagram.com/geomindsolutions/" 
+     class="icon" id="instagram-link">
+    <i class="fab fa-instagram"></i>
+  </a>
+
+  <!-- LinkedIn -->
+  <a target="_blank" href="https://www.linkedin.com/in/geomind-global-solutions-3484ab399" 
+     class="icon" id="linkedin-link">
+    <i class="fab fa-linkedin"></i>
+  </a>
+
+  <!-- YouTube -->
+  <a  target="_blank" href="https://www.youtube.com/@GeomindGlobalSolutions" 
+     class="icon" id="youtube-link">
+    <i class="fab fa-youtube"></i>
+  </a>
+
+  <!-- TikTok -->
+  <a target="_blank" href="https://www.tiktok.com/@geomindsolutions" 
+     class="icon" id="tiktok-link">
+    <i class="fab fa-tiktok"></i>
+  </a>
 </div>
 
+<footer><footer class="footer">
+  <p>&copy; 2025 Geomind Global Solutions - Todos los derechos reservados</p>
+</footer>
+
+</section>
+
+
+<!-- Scripts GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/ScrambleTextPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/MorphSVGPlugin.min.js"></script>
+
+
+  <!-- el scrip va al final  -->
+  <script src="script1_0.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
