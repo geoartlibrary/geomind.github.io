@@ -219,8 +219,8 @@ if (h1El) {
   gsap.from(".word-span", {
     duration: 1.5,
     opacity: 0,
-    x: () => gsap.utils.random(-300, 300),
-    y: () => gsap.utils.random(-200, 200),
+    x: () => gsap.utils.random(-100, 100),
+    y: () => gsap.utils.random(-100, 100),
     stagger: 0.1,
     ease: "expo.out",
     scrollTrigger: {
