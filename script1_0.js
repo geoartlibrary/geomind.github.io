@@ -188,3 +188,45 @@ ScrollTrigger.create({
   tick();
   setInterval(tick,1000);
 })();
+
+gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin, MorphSVGPlugin);
+
+// ── Scramble H2 ──────────────────────────────────────────────
+gsap.to("h2.revista-text", {
+  duration: 2,
+  scrambleText: {
+    text: "MEDIO DIGITAL DE DIVULGACIÓN CIENTÍFICA",
+    chars: "upperAndLowerCase",
+    revealDelay: 0.3,
+    speed: 0.8
+  },
+  ease: "power2.out",
+  scrollTrigger: {
+    trigger: "#revista",        // ← sección contenedora
+    start: "top 75%",           // se activa cuando el top de #revista llega al 75% del viewport
+    toggleActions: "play none none none"
+  }
+});
+
+// ── SplitText manual + animación H1 ──────────────────────────
+const h1El = document.querySelector("h1.revista-text");
+if (h1El) {
+  const words = h1El.textContent.trim().split(/\s+/);
+  h1El.innerHTML = words
+    .map(w => `<span class="word-span" style="display:inline-block; margin-right:0.25em">${w}</span>`)
+    .join("");
+
+  gsap.from(".word-span", {
+    duration: 1.5,
+    opacity: 0,
+    x: () => gsap.utils.random(-300, 300),
+    y: () => gsap.utils.random(-200, 200),
+    stagger: 0.1,
+    ease: "expo.out",
+    scrollTrigger: {
+      trigger: "#revista",      // ← misma sección
+      start: "top 75%",
+      toggleActions: "play none none none"
+    }
+  });
+}
