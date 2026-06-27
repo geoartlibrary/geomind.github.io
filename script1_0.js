@@ -78,54 +78,44 @@ showContent(index);
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Animación en el título
+// Animación en el título (se ejecuta directamente)
 gsap.to("#scramble-heading", {
   duration: 1.5,
-  scrambleText: "Soluciones personalizadas de otro nivel",
-  scrollTrigger: {
-    trigger: "#scramble-demo",
-    start: "top 80%",
-    toggleActions: "play none none none"
-  }
+  scrambleText: "Soluciones personalizadas de otro nivel"
 });
 
 // Lista de servicios con sus imágenes
 const servicios = [
-  { texto: "Informes de intercomparación de resultados", img: "IMAGENES/ilus.png" },
-  { texto: "Mapeo geológico multiescala", img: "IMAGENES/geoconnect.png" },
-  { texto: "Asesorias personalizadas ", img: "IMAGENES/logo.png" },
-  { texto: "Cursos personalizados", img: "IMAGENES/muestreo.png" },
+  { texto: "Informes de intercomparación de resultados", img: "IMAGENES/informes.jpg" },
+  { texto: "Mapeo geológico multiescala", img: "IMAGENES/mapa.jpg" },
+  { texto: "Asesorias personalizadas", img: "IMAGENES/asesorias.jpg" },
+  { texto: "Cursos personalizados", img: "IMAGENES/cursos.jpg" },
 ];
 
-// Timeline que recorre todos los servicios y se repite
-ScrollTrigger.create({
-  trigger: "#scramble-demo",
-  start: "top 80%",
-  onEnter: () => {
-    const tl = gsap.timeline({ repeat: -1 }); // repeat infinito
+// Timeline que recorre todos los servicios y se repite infinito
+const tl = gsap.timeline({ repeat: -1 });
 
-    servicios.forEach((servicio) => {
-      tl.to("#scramble-paragraph", {
-        duration: 2,
-        scrambleText: {
-          text: servicio.texto,
-          chars: "XO",
-          revealDelay: 0.5,
-          speed: 0.3,
-          newClass: "myClass"
-        },
-        onStart: () => {
-          const imgElement = document.getElementById("service-image");
-          imgElement.style.opacity = 0;
-          imgElement.src = servicio.img;
-          setTimeout(() => {
-            imgElement.style.opacity = 1;
-          }, 300);
-        }
-      }).to({}, { duration: 1 }); // pequeña pausa entre servicios
-    });
-  }
+servicios.forEach((servicio) => {
+  tl.to("#scramble-paragraph", {
+    duration: 2,
+    scrambleText: {
+      text: servicio.texto,
+      chars: "XO",
+      revealDelay: 0.5,
+      speed: 0.3,
+      newClass: "myClass"
+    },
+    onStart: () => {
+      const imgElement = document.getElementById("service-image");
+      imgElement.style.opacity = 0;
+      imgElement.src = servicio.img;
+      setTimeout(() => {
+        imgElement.style.opacity = 1;
+      }, 300);
+    }
+  }).to({}, { duration: 1 }); // pausa entre servicios
 });
+
 
 ScrollTrigger.create({
   trigger: "#revista",
@@ -139,3 +129,62 @@ ScrollTrigger.create({
       .to("#icon-shape", { duration: 1.2, morphSVG: "#icon-shape", delay: 0.8 });
   }
 });
+
+// Animación GSAP para ocultar/mostrar navbar según scroll
+const showAnim = gsap.from('.main-tool-bar', { 
+  yPercent: -100,
+  paused: true,
+  duration: 0.2
+}).progress(1);
+
+ScrollTrigger.create({
+  start: "top top",
+  end: "max",
+  onUpdate: (self) => {
+    self.direction === -1 ? showAnim.play() : showAnim.reverse();
+  }
+});
+
+
+
+(function(){
+  const zones=[
+    {city:"Saskatchewan", tz:"America/Regina",       flag:"🇨🇦"},
+    {city:"México",        tz:"America/Mexico_City",  flag:"🇲🇽"},
+    {city:"Quito",         tz:"America/Guayaquil",    flag:"🇪🇨"},
+    {city:"Madrid",        tz:"Europe/Madrid",         flag:"🇪🇸"}
+  ];
+
+  const wrap=document.getElementById("cm");
+  if(!wrap) return;
+
+  zones.forEach(z=>{
+    const id="cm-"+z.tz.replace(/\//g,"-");
+    const item=document.createElement("div");
+    item.className="cm-item";
+    item.innerHTML=
+      `<span class="cm-flag">${z.flag}</span>`+
+      `<div class="cm-info">`+
+        `<div class="cm-city">${z.city}</div>`+
+        `<div class="cm-time" id="${id}">--:--:--</div>`+
+      `</div>`;
+    wrap.appendChild(item);
+  });
+
+  function tick(){
+    const now=new Date();
+    zones.forEach(z=>{
+      const el=document.getElementById("cm-"+z.tz.replace(/\//g,"-"));
+      if(el) el.textContent=now.toLocaleTimeString("es-ES",{
+        timeZone:z.tz,
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+        hour12:false
+      });
+    });
+  }
+
+  tick();
+  setInterval(tick,1000);
+})();
