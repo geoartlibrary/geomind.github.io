@@ -23,6 +23,13 @@ body {
 
 }
 
+
+  @media (max-width: 600px) {
+  body {
+      padding-top: 80px;
+  }
+}
+
 /* =========================
    📌 Navbar con efecto glass
    ========================= */
@@ -446,7 +453,6 @@ body {
   color: var(--light);
   text-align: center;
   padding: 80px 20px;
-  border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
@@ -488,7 +494,6 @@ body {
   background: linear-gradient(135deg, #163150, #b17c44, #676b66);
   text-align: center;
   padding: 80px 20px;
-  border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   color: #fff;
   min-height: 100vh;       /* altura mínima = altura de la ventana */
