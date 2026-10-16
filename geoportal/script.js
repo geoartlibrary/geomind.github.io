@@ -707,7 +707,28 @@ document.getElementById("toggle-fosil").addEventListener("change", e => {
     } catch (_) {}
   });
 
-  
+  const openQuakeMap = L.tileLayer(
+  "https://maps.openquake.org/mapproxy/grm-2026-06-08-ph8-clipped/wmts/economic-losses/webmercator/{z}/{x}/{y}.png", 
+  {
+    attribution: 'Global Earthquake Model (GEM) · OpenQuake',
+    maxZoom: 10,
+    minZoom: 2,
+    transparent: true,
+    opacity: 1.0
+  }
+);
+
+const hazardMap2026 = L.tileLayer(
+  "https://maps.openquake.org/mapproxy/gshm-2026-06-04-nobg/wmts/v20260/webmercator/{z}/{x}/{y}.png", 
+  {
+    attribution: 'Global Earthquake Model (GEM) · OpenQuake v2026.1',
+    maxZoom: 10,
+    minZoom: 2,
+    transparent: true,
+    opacity: 1.0
+  }
+);
+
 
   document.getElementById("toggle-hidrologia").addEventListener("change", e => {
     e.target.checked ? map.addLayer(volcanes) : map.removeLayer(volcanes);
@@ -750,6 +771,12 @@ document.getElementById("toggle-geologiasub").addEventListener("change", e => {
   });
           document.getElementById("toggle-petroleo").addEventListener("change", e => {
     e.target.checked ? map.addLayer(reservasGasPetroleo) : map.removeLayer(reservasGasPetroleo);
+  });
+     document.getElementById("toggle-sismo").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(openQuakeMap) : map.removeLayer(openQuakeMap);
+  });
+    document.getElementById("toggle-amenaza").addEventListener("change", e => {
+    e.target.checked ? map.addLayer(hazardMap2026) : map.removeLayer(hazardMap2026);
   });
  
   //  HERRAMIENTA DE CAPTURA DE COORDENADAS
